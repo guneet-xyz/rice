@@ -1,0 +1,12 @@
+[hostname]
+style = "bold red"
+
+[directory]
+truncation_length = 0
+truncate_to_repo = false
+style = "bold blue"
+repo_root_style = "bold blue"
+before_repo_root_style = "bold black"
+
+[git_branch]
+style = "green"
