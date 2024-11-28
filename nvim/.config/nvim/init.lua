@@ -432,6 +432,7 @@ require('lazy').setup({
         markdown = { 'mdformat' },
         zsh = { 'shfmt' },
         -- Conform can also run multiple formatters sequentially
+        yaml = { 'yamlfmt' },
         python = { 'isort', 'ruff' },
         typescript = { 'prettier' },
         javascript = { 'prettier' },
