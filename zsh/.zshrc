@@ -8,8 +8,9 @@
 # | ---------------- |
 
 export PATH="/usr/local/bin:/usr/bin:/bin"
-export PATH="$PATH:/sbin"
+export PATH="/sbin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.deno/bin:$PATH"
 
 export LC_CTYPE="en_IN.UTF-8"
 export LC_ALL="en_IN.UTF-8"
