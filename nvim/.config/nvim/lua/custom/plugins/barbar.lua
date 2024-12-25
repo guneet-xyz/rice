@@ -19,4 +19,18 @@ return {
     -- …etc.
   },
   version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  keys = {
+    { '<C-1>', ':BufferGoto 1<CR>' },
+    { '<C-2>', ':BufferGoto 2<CR>' },
+    { '<C-3>', ':BufferGoto 3<CR>' },
+    { '<C-4>', ':BufferGoto 4<CR>' },
+    { '<C-5>', ':BufferGoto 5<CR>' },
+    { '<C-6>', ':BufferGoto 6<CR>' },
+    { '<C-7>', ':BufferGoto 7<CR>' },
+    { '<C-8>', ':BufferGoto 8<CR>' },
+    { '<C-9>', ':BufferGoto 9<CR>' },
+    { '<C-[>', ':BufferPrevious<CR>' },
+    { '<C-]>', ':BufferNext<CR>' },
+    { '<C-w>', ':BufferClose<CR>' },
+  },
 }
