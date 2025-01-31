@@ -3,6 +3,10 @@ vim.g.maplocalleader = ','
 
 vim.g.have_nerd_font = true
 
+-- Wrapping behaviour
+vim.opt.wrap = true
+vim.opt.linebreak = true
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
