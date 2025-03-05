@@ -20,6 +20,18 @@ return {
           ['\\'] = 'close_window',
         },
       },
+      filtered_items = {
+        visible = false, -- hide filtered items on open
+        hide_gitignored = false,
+        hide_dotfiles = false,
+        hide_by_name = {
+          'package-lock.json',
+          'bun.lock',
+          'node_modules',
+          '.next',
+        },
+        never_show = { '.git' },
+      },
     },
   },
 }
