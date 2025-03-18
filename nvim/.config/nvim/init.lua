@@ -495,7 +495,7 @@ require('lazy').setup({
           args = { 'format', '--stdin-filename', '$FILENAME' },
         },
         prettier = {
-          command = 'bunx',
+          command = 'npx',
           args = { 'prettier', '--stdin-filepath', '$FILENAME' },
         },
         ['clang-format'] = {
@@ -693,9 +693,9 @@ require('lazy').setup({
     end,
   },
   {
-    "folke/ts-comments.nvim",
+    'folke/ts-comments.nvim',
     opts = {},
-    event = "VeryLazy",
+    event = 'VeryLazy',
     -- enabled = vim.fn.has("nvim-0.10.0") == 1,
   },
 
