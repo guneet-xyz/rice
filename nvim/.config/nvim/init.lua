@@ -495,8 +495,8 @@ require('lazy').setup({
           args = { 'format', '--stdin-filename', '$FILENAME' },
         },
         prettier = {
-          command = 'npx',
-          args = { 'prettier', '--stdin-filepath', '$FILENAME' },
+          command = 'bunx',
+          args = { '--bun', 'prettier', '--stdin-filepath', '$FILENAME' },
         },
         ['clang-format'] = {
           command = 'clang-format',
