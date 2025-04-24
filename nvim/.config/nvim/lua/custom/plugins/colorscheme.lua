@@ -14,6 +14,34 @@ return {
     -- vim.cmd.colorscheme 'tokyonight-night'
     -- vim.cmd.colorscheme 'retrobox'
     --
+
+    vim.o.wildignore = table.concat({
+      -- A list of whatever else you want to ignore. E.g., "__pycache__", "*.o", etc.
+      'blue.vim',
+      'darkblue.vim',
+      'delek.vim',
+      'desert.vim',
+      'elflord.vim',
+      'evening.vim',
+      'habamax.vim',
+      'industry.vim',
+      'koehler.vim',
+      'lunaperche.vim',
+      'morning.vim',
+      'murphy.vim',
+      'pablo.vim',
+      'peachpuff.vim',
+      'quiet.vim',
+      'retrobox.vim',
+      'ron.vim',
+      'shine.vim',
+      'slate.vim',
+      'sorbet.vim',
+      'torte.vim',
+      'wildcharm.vim',
+      'zaibatsu.vim',
+      'zellner.vim',
+    }, ',')
     -- vim.cmd.colorscheme 'retrobox'
     vim.cmd.colorscheme 'leaf'
 
