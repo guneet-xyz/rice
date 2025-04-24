@@ -46,6 +46,7 @@ return {
     local footerTable = {
       { 'colorscheme', vim.g.colors_name },
       { 'time', os.date '%H:%M:%S' },
+      { 'date', os.date '%Y-%m-%d' },
     }
 
     local footer = {}

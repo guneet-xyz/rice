@@ -1,10 +1,10 @@
 return {
   'xiyaowong/transparent.nvim',
   dependencies = {
-    'folke/tokyonight.nvim',
-    'catppuccin/nvim',
-    'EdenEast/nightfox.nvim',
-    'daschw/leaf.nvim',
+    -- 'folke/tokyonight.nvim',
+    -- 'catppuccin/nvim',
+    -- 'EdenEast/nightfox.nvim',
+    -- 'daschw/leaf.nvim',
   },
   priority = 1000, -- Make sure to load this before all the other start plugins.
   init = function()
@@ -41,9 +41,13 @@ return {
       'wildcharm.vim',
       'zaibatsu.vim',
       'zellner.vim',
+      'randomhue.vim',
+      'minicyan.vim',
+      'minischeme.vim',
+      'vim.vim',
     }, ',')
     -- vim.cmd.colorscheme 'retrobox'
-    vim.cmd.colorscheme 'leaf'
+    -- vim.cmd.colorscheme 'leaf'
 
     -- You can configure highlights by doing something like:
     vim.cmd.hi 'Comment gui=none'
