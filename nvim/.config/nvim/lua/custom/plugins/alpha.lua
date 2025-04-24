@@ -1,3 +1,8 @@
+----------------------------------------------------------------------------
+-- Refer to this discussion for more examples of greeters using alpha.nvim
+-- https://github.com/goolord/alpha-nvim/discussions/16
+----------------------------------------------------------------------------
+
 return {
   'goolord/alpha-nvim',
   config = function()
