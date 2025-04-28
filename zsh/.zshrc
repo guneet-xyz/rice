@@ -15,7 +15,7 @@ export PATH="$HOME/.deno/bin:$PATH"
 export PATH="$HOME/.local/bin/nvim-linux64/bin:$PATH"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:/usr/local/go/bin"
-export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:${HOME}/sdk/go1.23.6/bin"
 
 export LC_CTYPE="en_IN.UTF-8"
 export LC_ALL="en_IN.UTF-8"
