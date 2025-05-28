@@ -3,6 +3,7 @@ return {
   lazy = false,
   dependencies = { 'MunifTanjim/nui.nvim' },
   opts = {
+    restriction_mode = 'hint',
     disabled_keys = {
       -- scrolling
       ['<Up>'] = false,
