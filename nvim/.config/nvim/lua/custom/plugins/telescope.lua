@@ -16,12 +16,28 @@ return {
   },
   config = function()
     require('telescope').setup {
+      defaults = {
+        vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--no-ignore-vcs',
+          '--hidden',
+        },
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
       },
       pickers = {
+        find_files = {
+          find_command = { 'rg', '--files', '--no-ignore-vcs', '--hidden' },
+        },
         colorscheme = {
           theme = 'ivy',
           enable_preview = true,
