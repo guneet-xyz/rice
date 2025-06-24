@@ -5,6 +5,7 @@ local dependencies = {
   'EdenEast/nightfox.nvim',
   'daschw/leaf.nvim',
   'rebelot/kanagawa.nvim',
+  'rose-pine/neovim',
 }
 
 -- favorite color schemes
