@@ -433,6 +433,10 @@ require('lazy').setup({
           command = 'bunx',
           args = { '--bun', 'prettier', '--stdin-filepath', '$FILENAME' },
         },
+        biome = {
+          command = 'biome',
+          args = { 'format', '$FILENAME' },
+        },
         ['clang-format'] = {
           command = 'clang-format',
           args = { '--style', 'Microsoft' },
