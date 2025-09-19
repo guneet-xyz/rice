@@ -121,3 +121,6 @@ vim.api.nvim_create_autocmd('ExitPre', {
 vim.keymap.set('n', '<leader>v', ':Explore<CR>', { desc = 'Move focus to the upper window' })
 vim.keymap.set('n', '<leader>]', ':BufferNext<CR>', { desc = 'Move to next buffer' })
 vim.keymap.set('n', '<leader>[', ':BufferPrevious<CR>', { desc = 'Move to previous buffer' })
+
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
