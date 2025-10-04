@@ -19,7 +19,7 @@ local colorscheme_filters = {
 }
 
 -- active colorscheme
-local active_colorscheme = 'kanagawa'
+local active_colorscheme = 'rose-pine'
 
 -------------------------------------------------------
 ------- PLUGIN AND TELESCOPE DEFINITION FOLLOWS -------
