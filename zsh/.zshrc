@@ -89,3 +89,38 @@ else
   echo "woah. zoxide is not installed. what's wrong with you?"
 fi
 # -------------------------------
+
+# check if rice is outdated
+export RICE_DIR="$HOME/rice"
+if [ -d "$RICE_DIR" ]; then
+  cd "$RICE_DIR" 
+  check_rice_status() {
+    if [[ -n $(git status --porcelain) ]]; then
+      echo "alert - rice has local changes."
+      return
+    fi
+
+    # Check for pending pulls
+    if [[ -n $(git fetch --dry-run) ]]; then
+      echo "alert - rice has pending pull."
+      return
+    fi
+
+    # Check for pending pushes
+    if [[ -n $(git log @{u}..HEAD) ]]; then
+      echo "alert - rice has pending push."
+      return
+    fi
+
+    # Check for divergent history
+    if [[ -n $(git log HEAD..@{u} --oneline) ]]; then
+      echo "alert - rice has divergent history."
+      return
+    fi
+
+    echo "rice is up to date."
+  }
+  check_rice_status
+else
+  echo "woah. rice directory not found at $RICE_DIR?"
+fi
