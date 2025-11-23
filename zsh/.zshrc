@@ -8,11 +8,8 @@
 # | ---------------- |
 
 export TERM="xterm"
+export XDG_CONFIG_HOME="$HOME/.config"
  
-#export HOME="/home/$USER"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export HOMEBREW_NO_ENV_HINTS=1
-
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin"
 export PATH="$PATH:/sbin"
 export PATH="$PATH:$HOME/.local/bin"
@@ -30,7 +27,6 @@ export LC_ALL="en_IN.UTF-8"
 export KUBE_EDITOR="nvim"
 export EDITOR="nvim"
 
-
 alias v="nvim"
 alias ls="eza --icons"
 alias la="ls -la"
@@ -39,46 +35,57 @@ alias gl="git log --oneline"
 alias gd="git diff"
 alias gc="git commit"
 
+# ----------- homebrew -----------
+if [ -s "/opt/homebrew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  export HOMEBREW_NO_ENV_HINTS=1
+fi
+# -------------------------------
+
 # ----------- bun ---------------
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+if [ -s "$HOME/.bun/_bun" ]; then 
+  source "$HOME/.bun/_bun"
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$PATH:$BUN_INSTALL/bin"
+fi
 # -------------------------------
 
 # ----------- pyenv -------------
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if which pyenv >/dev/null 2>&1; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  export VIRTUAL_ENV_DISABLE_PROMPT=1
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 # -------------------------------
 
 # ----------- nvm ---------------
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+if [ -s "/usr/share/nvm/init-nvm.sh" ]; then
+  . /usr/share/nvm/init-nvm.sh
+else
+  NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+fi
 # -------------------------------
-
-# pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm eno
 
 # ----------- rust --------------
 [ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 # -------------------------------
 
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+# ----------- starship ------------
+if which starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+else
+  echo "woah. starship is not installed. what's wrong with you?"
+fi
+# -------------------------------
 
-# bun completions
-[ -s "/Users/guneet/.bun/_bun" ] && source "/Users/guneet/.bun/_bun"
-
-# opencode
-
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#444444"
+# ----------- zoxide ------------
+if which zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+else
+  echo "woah. zoxide is not installed. what's wrong with you?"
+fi
+# -------------------------------
