@@ -93,8 +93,8 @@ fi
 # check if rice is outdated
 export RICE_DIR="$HOME/rice"
 if [ -d "$RICE_DIR" ]; then
-  cd "$RICE_DIR" 
   check_rice_status() {
+    cd "$RICE_DIR"
     if [[ -n $(git status --porcelain) ]]; then
       echo "alert - rice has local changes."
       return
@@ -117,10 +117,9 @@ if [ -d "$RICE_DIR" ]; then
       echo "alert - rice has divergent history."
       return
     fi
-
-    echo "rice is up to date."
   }
   check_rice_status
+  cd $HOME
 else
   echo "woah. rice directory not found at $RICE_DIR?"
 fi
