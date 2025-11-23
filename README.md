@@ -6,7 +6,7 @@ These are my is my personal configurations for software's and tools i use on acr
 
 > Preface: You are encouraged to make your own adjustments to all the configurations. Ricing is a very personal endeavor.
 
-Most configurations are stow-compatible; with the [exceptions][#exceptions] being listed below. Read more about stow [here](https://www.gnu.org/software/stow/).
+Most configurations are stow-compatible; with the [exceptions](#exceptions) being listed below. Read more about stow [here](https://www.gnu.org/software/stow/).
 
 Example, to install the nvim config,
 
