@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/sh
 
 # common config
 stow -v -t $HOME common

@@ -11,7 +11,7 @@ Most configurations are stow-compatible; with the [exceptions][#exceptions] bein
 Example, to install the nvim config,
 
 ```
-stow nvim
+stow -v -t $HOME nvim
 ```
 
 ### Exceptions
