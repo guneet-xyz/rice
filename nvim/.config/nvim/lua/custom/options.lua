@@ -124,3 +124,4 @@ vim.keymap.set('n', '<leader>[', ':BufferPrevious<CR>', { desc = 'Move to previo
 
 vim.opt.spelllang = 'en_us'
 vim.opt.spell = true
+vim.opt.spelloptions = 'camel'

@@ -19,7 +19,7 @@ local colorscheme_filters = {
 }
 
 -- active colorscheme
-local active_colorscheme = 'rose-pine'
+local active_colorscheme = 'retrobox'
 
 -------------------------------------------------------
 ------- PLUGIN AND TELESCOPE DEFINITION FOLLOWS -------

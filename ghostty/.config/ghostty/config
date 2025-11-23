@@ -1,6 +1,12 @@
+# vim: set ft=config
+
 window-padding-x = 4
 window-padding-y = 16
 background-opacity = 0.9
+background-image = ~/.config/ghostty/wallhaven-jexqqm.jpeg
+background-image-opacity = 0.25
+background-image-fit = cover
+
 theme = carbonfox
 
 font-family = Monaspace Krypton Medium
