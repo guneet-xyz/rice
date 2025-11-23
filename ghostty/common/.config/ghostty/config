@@ -1,0 +1,12 @@
+# vim: set ft=config
+
+font-family = "Monaspace Argon"
+
+theme = carbonfox
+
+window-padding-x = 10
+window-padding-y = 10
+
+# machine-specific configurations
+config-file = ?config.devstick
+config-file = ?config.macbook
