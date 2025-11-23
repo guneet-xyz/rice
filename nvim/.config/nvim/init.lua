@@ -430,8 +430,8 @@ require('lazy').setup({
           args = { 'format', '--stdin-filename', '$FILENAME' },
         },
         prettier = {
-          command = 'bunx',
-          args = { '--bun', 'prettier', '--stdin-filepath', '$FILENAME' },
+          command = 'npx',
+          args = { 'prettier', '--stdin-filepath', '$FILENAME' },
         },
         biome = {
           command = 'biome',

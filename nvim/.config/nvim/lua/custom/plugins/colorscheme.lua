@@ -19,7 +19,7 @@ local colorscheme_filters = {
 }
 
 -- active colorscheme
-local active_colorscheme = 'retrobox'
+local active_colorscheme = 'carbonfox'
 
 -------------------------------------------------------
 ------- PLUGIN AND TELESCOPE DEFINITION FOLLOWS -------

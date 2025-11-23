@@ -35,6 +35,8 @@ return {
       'Make it happen!',
       "Code won't write itself",
       'Get it done you lazy bum!',
+      'Jazz Hands!',
+      'Fist my bump!',
     }
 
     math.randomseed(os.time())
