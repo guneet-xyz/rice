@@ -17,6 +17,7 @@ return {
   config = function()
     require('telescope').setup {
       defaults = {
+        layout_strategy = 'vertical',
         vimgrep_arguments = {
           'rg',
           '--color=never',
