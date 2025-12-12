@@ -1,6 +1,6 @@
 # rice
 
-These are my is my personal configurations for software's and tools i use on across multiple machines.
+These are my personal configurations for software's and tools i use on across multiple machines.
 
 ## Usage
 
