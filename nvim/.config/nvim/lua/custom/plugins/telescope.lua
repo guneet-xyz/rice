@@ -37,6 +37,10 @@ return {
       pickers = {
         find_files = {
           find_command = { 'rg', '--files', '--no-ignore-vcs', '--hidden' },
+          layout_strategy = 'vertical',
+        },
+        live_grep = {
+          layout_strategy = 'vertical',
         },
         colorscheme = {
           theme = 'ivy',
