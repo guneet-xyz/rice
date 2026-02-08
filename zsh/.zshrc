@@ -21,8 +21,8 @@ export PATH="$PATH:$HOME/sdk/go1.23.6/bin"
 export PATH="$PATH:/Users/guneet/.opencode/bin"
 export PATH="$PATH:$HOME/go/bin"
 
-export LC_CTYPE="en_IN.UTF-8"
-export LC_ALL="en_IN.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 
 export KUBE_EDITOR="nvim"
 export EDITOR="nvim"
@@ -123,3 +123,6 @@ if [ -d "$RICE_DIR" ]; then
 else
   echo "woah. rice directory not found at $RICE_DIR?"
 fi
+
+# OpenClaw Completion
+source <(openclaw completion --shell zsh)
