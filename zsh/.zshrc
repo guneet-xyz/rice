@@ -90,6 +90,9 @@ else
 fi
 # -------------------------------
 
+# ---------- zsh-autosuggestions ----------
+[ -s "$HOME/.config/zsh/zsh-autosuggestions.zsh" ] && source "$HOME/.config/zsh/zsh-autosuggestions.zsh"
+
 # check if rice is outdated
 export RICE_DIR="$HOME/rice"
 if [ -d "$RICE_DIR" ]; then
