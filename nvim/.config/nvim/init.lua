@@ -407,6 +407,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         markdown = { 'prettier' },
+        astro = { 'prettier' },
         mdx = { 'mdformat', 'prettier' },
         zsh = { 'shfmt' },
         -- Conform can also run multiple formatters sequentially
