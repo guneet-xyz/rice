@@ -406,7 +406,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        markdown = { 'mdformat', 'prettier' },
+        markdown = { 'prettier' },
         mdx = { 'mdformat', 'prettier' },
         zsh = { 'shfmt' },
         -- Conform can also run multiple formatters sequentially
@@ -603,7 +603,7 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    tag = "v0.10.0",
+    tag = 'v0.10.0',
     build = ':TSUpdate',
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },

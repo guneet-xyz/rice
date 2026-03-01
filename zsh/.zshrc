@@ -129,3 +129,6 @@ fi
 
 # OpenClaw Completion
 source <(openclaw completion --shell zsh)
+
+# opencode
+export PATH=/home/guneet/.opencode/bin:$PATH
