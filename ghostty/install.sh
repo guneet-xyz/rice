@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # common config
 stow -v -t $HOME common
