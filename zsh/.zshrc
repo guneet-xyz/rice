@@ -64,7 +64,7 @@ fi
 if [ -s "/usr/share/nvm/init-nvm.sh" ]; then
   . /usr/share/nvm/init-nvm.sh
 else
-  NVM_DIR="$HOME/.nvm"
+  NVM_DIR="$HOME/.config/nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
@@ -128,7 +128,15 @@ else
 fi
 
 # OpenClaw Completion
-source <(openclaw completion --shell zsh)
+#source <(openclaw completion --shell zsh)
 
 # opencode
 export PATH=/home/guneet/.opencode/bin:$PATH
+
+# pnpm
+export PNPM_HOME="/home/guneet/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
