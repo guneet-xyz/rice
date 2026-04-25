@@ -20,11 +20,10 @@ export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:$HOME/sdk/go1.23.6/bin"
 export PATH="$PATH:/Users/guneet/.opencode/bin"
 export PATH="$PATH:$HOME/go/bin"
-
-export LC_CTYPE="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
+export PATH="$PATH:/home/guneet/.opencode/bin"
 
 export KUBE_EDITOR="nvim"
+alias k="kubectl"
 export EDITOR="nvim"
 
 alias v="nvim"
@@ -34,13 +33,6 @@ alias gs="git status --short"
 alias gl="git log --oneline"
 alias gd="git diff"
 alias gc="git commit"
-
-# ----------- homebrew -----------
-if [ -s "/opt/homebrew" ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-  export HOMEBREW_NO_ENV_HINTS=1
-fi
-# -------------------------------
 
 # ----------- bun ---------------
 if [ -s "$HOME/.bun/_bun" ]; then 
@@ -90,8 +82,9 @@ else
 fi
 # -------------------------------
 
-# ---------- zsh-autosuggestions ----------
+# ----- zsh-autosuggestions -----
 [ -s "$HOME/.config/zsh/zsh-autosuggestions.zsh" ] && source "$HOME/.config/zsh/zsh-autosuggestions.zsh"
+# -------------------------------
 
 # check if rice is outdated
 export RICE_DIR="$HOME/rice"
@@ -127,16 +120,24 @@ else
   echo "woah. rice directory not found at $RICE_DIR?"
 fi
 
-# OpenClaw Completion
-#source <(openclaw completion --shell zsh)
-
-# opencode
-export PATH=/home/guneet/.opencode/bin:$PATH
-
-# pnpm
+# ----------- pnpm ---------------
 export PNPM_HOME="/home/guneet/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
+# --------------------------------
+
+# bun completions
+[ -s "/Users/guneet/.bun/_bun" ] && source "/Users/guneet/.bun/_bun"
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+  source "$HOME/.config/zsh/linux.zsh"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  source "$HOME/.config/zsh/macbook.zsh"
+else
+  echo "unknown platform: $OSTYPE"
+  exit 1
+fi
+
+[ -s "$HOME/.config/zsh/secrets.zsh" ] && source "$HOME/.config/zsh/secrets.zsh"
