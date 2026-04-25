@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "litellm/claude-opus-4.6",
+  "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LiteLLM",
+      "options": {
+        "baseURL": "https://llm.guneet.dev"
+      },
+      "models": {
+        "claude-opus-4.6-1m": {
+          "name": "Claude Opus 4.6 (1M)"
+        },
+        "claude-opus-4.6": {
+          "name": "Claude Opus 4.6",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        }
+      }
+    }
+  }
+}
