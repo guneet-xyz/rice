@@ -81,6 +81,106 @@
       "skillFolderHash": "4e9756119ec08dc28bf772d8b348d68866e43571",
       "installedAt": "2026-04-25T05:09:50.187Z",
       "updatedAt": "2026-04-25T05:09:50.187Z"
+    },
+    "obsidian-markdown": {
+      "source": "kepano/obsidian-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/kepano/obsidian-skills.git",
+      "skillPath": "skills/obsidian-markdown/SKILL.md",
+      "skillFolderHash": "5caf5d9e7de204f3904216857545f2aa36bcfcac",
+      "installedAt": "2026-04-26T02:47:13.239Z",
+      "updatedAt": "2026-04-26T02:47:13.239Z"
+    },
+    "obsidian-bases": {
+      "source": "kepano/obsidian-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/kepano/obsidian-skills.git",
+      "skillPath": "skills/obsidian-bases/SKILL.md",
+      "skillFolderHash": "4bef60bb848bfb02b4172b552626d5741b0d4057",
+      "installedAt": "2026-04-26T02:47:38.673Z",
+      "updatedAt": "2026-04-26T02:47:38.673Z"
+    },
+    "obsidian-cli": {
+      "source": "kepano/obsidian-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/kepano/obsidian-skills.git",
+      "skillPath": "skills/obsidian-cli/SKILL.md",
+      "skillFolderHash": "96254a554e480359de7b685571876f2e7f9ba57d",
+      "installedAt": "2026-04-26T02:47:50.911Z",
+      "updatedAt": "2026-04-26T02:47:50.911Z"
+    },
+    "excalidraw-diagram-generator": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/github/awesome-copilot.git",
+      "skillPath": "skills/excalidraw-diagram-generator/SKILL.md",
+      "skillFolderHash": "ba20eb1474ed8c2123f2a98e36f822b9bf369834",
+      "installedAt": "2026-04-26T03:52:26.986Z",
+      "updatedAt": "2026-04-26T03:52:26.986Z"
+    },
+    "vault-librarian": {
+      "source": "guneet-xyz/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/guneet-xyz/skills.git",
+      "skillPath": "skills/vault-librarian/SKILL.md",
+      "skillFolderHash": "33bfe32f77f471855131c25fedc8bda31864da92",
+      "installedAt": "2026-04-26T06:37:48.134Z",
+      "updatedAt": "2026-04-26T06:37:48.134Z"
+    },
+    "vault-cleanup": {
+      "source": "guneet-xyz/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/guneet-xyz/skills.git",
+      "skillPath": "skills/vault-cleanup/SKILL.md",
+      "skillFolderHash": "d1a7d5400926db4c6c5157de74bbaad8778e47a5",
+      "installedAt": "2026-04-26T07:34:28.104Z",
+      "updatedAt": "2026-04-26T10:33:15.471Z"
+    },
+    "vault-init": {
+      "source": "guneet-xyz/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/guneet-xyz/skills.git",
+      "skillPath": "skills/vault-init/SKILL.md",
+      "skillFolderHash": "54bf1ecab0311fd16918e70387294bff4cf225c4",
+      "installedAt": "2026-04-26T07:34:28.628Z",
+      "updatedAt": "2026-04-26T10:33:17.862Z"
+    },
+    "vault-save": {
+      "source": "guneet-xyz/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/guneet-xyz/skills.git",
+      "skillPath": "skills/vault-save/SKILL.md",
+      "skillFolderHash": "eab0aa865538b1532d5b6af8220a3b2faab704f2",
+      "installedAt": "2026-04-26T07:34:29.093Z",
+      "updatedAt": "2026-04-26T10:33:20.788Z"
+    },
+    "vault-search": {
+      "source": "guneet-xyz/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/guneet-xyz/skills.git",
+      "skillPath": "skills/vault-search/SKILL.md",
+      "skillFolderHash": "326c140ee1a85c487b867b8c41387024f1ab62ba",
+      "installedAt": "2026-04-26T07:34:29.555Z",
+      "updatedAt": "2026-04-26T10:33:23.405Z"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "skillFolderHash": "3116f3e62dbd02b44a598b1aa690d2a8938e8f89",
+      "installedAt": "2026-04-26T10:45:12.978Z",
+      "updatedAt": "2026-04-26T10:45:12.978Z"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-26T10:45:31.684Z",
+      "updatedAt": "2026-04-26T10:45:31.684Z"
     }
   },
   "dismissed": {
