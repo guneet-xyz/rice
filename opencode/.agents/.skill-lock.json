@@ -181,6 +181,33 @@
       "pluginName": "example-skills",
       "installedAt": "2026-04-26T10:45:31.684Z",
       "updatedAt": "2026-04-26T10:45:31.684Z"
+    },
+    "content-strategy": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/coreyhaines31/marketingskills.git",
+      "skillPath": "skills/content-strategy/SKILL.md",
+      "skillFolderHash": "cacb03a8610f958ece2096ca38d0c96b1b6299bf",
+      "installedAt": "2026-04-30T16:49:48.907Z",
+      "updatedAt": "2026-04-30T16:49:48.907Z"
+    },
+    "copywriting": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/coreyhaines31/marketingskills.git",
+      "skillPath": "skills/copywriting/SKILL.md",
+      "skillFolderHash": "4ac08d315b36a42902eb015f913743a241986011",
+      "installedAt": "2026-04-30T17:06:49.639Z",
+      "updatedAt": "2026-04-30T17:06:49.639Z"
+    },
+    "security-review": {
+      "source": "getsentry/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/getsentry/skills.git",
+      "skillPath": "skills/security-review/SKILL.md",
+      "skillFolderHash": "598da260ce536813c8bce1607b3c447bdc2f54f7",
+      "installedAt": "2026-05-01T04:39:42.889Z",
+      "updatedAt": "2026-05-01T04:39:42.889Z"
     }
   },
   "dismissed": {
@@ -193,6 +220,7 @@
     "codex",
     "cursor",
     "deepagents",
+    "dexto",
     "firebender",
     "gemini-cli",
     "github-copilot",
