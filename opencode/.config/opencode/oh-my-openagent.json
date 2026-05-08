@@ -1,0 +1,64 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "litellm/claude-opus-4.7"
+    },
+    "sisyphus-junior": {
+      "model": "litellm/claude-sonnet-4.6"
+    },
+    "metis": {
+      "model": "litellm/claude-sonnet-4.6"
+    },
+    "prometheus": {
+      "model": "litellm/claude-opus-4.7"
+    },
+    "atlas": {
+      "model": "litellm/claude-sonnet-4.6"
+    },
+    "hephaestus": {
+      "model": "litellm/gpt-5.5"
+    },
+    "oracle": {
+      "model": "litellm/gpt-5.5"
+    },
+    "momus": {
+      "model": "litellm/gpt-5.5"
+    },
+    "explore": {
+      "model": "litellm/claude-haiku-4.5"
+    },
+    "librarian": {
+      "model": "litellm/claude-haiku-4.5"
+    },
+    "multimodal-looker": {
+      "model": "litellm/gpt-5.5"
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "litellm/gpt-5.5"
+    },
+    "ultrabrain": {
+      "model": "litellm/claude-opus-4.7"
+    },
+    "deep": {
+      "model": "litellm/claude-opus-4.7"
+    },
+    "artistry": {
+      "model": "litellm/claude-opus-4.7"
+    },
+    "quick": {
+      "model": "litellm/claude-haiku-4.5"
+    },
+    "unspecified-low": {
+      "model": "litellm/claude-haiku-4.5"
+    },
+    "unspecified-high": {
+      "model": "litellm/claude-opus-4.7"
+    },
+    "writing": {
+      "model": "litellm/claude-opus-4.7"
+    }
+  }
+}
