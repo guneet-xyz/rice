@@ -1,2 +1,11 @@
 **/.DS_Store
 zsh/.config/zsh/secrets.zsh
+
+# Go build artifacts
+/rice
+/dist/
+*.test
+coverage.out
+
+# Rice CLI
+.sisyphus/evidence/
