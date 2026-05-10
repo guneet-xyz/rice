@@ -53,6 +53,15 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-05-10T15:36:28.927Z"
+    },
+    "todo:7": {
+      "task_key": "todo:7",
+      "task_label": "7",
+      "task_title": "**Manifest discovery + parsing**",
+      "session_id": "ses_1ed76dab7ffeaXO3SkDLXL48W3",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T15:38:58.272Z"
     }
   }
 }

@@ -1,0 +1,12 @@
+schema_version = 1
+name = "ghostty"
+description = "Ghostty terminal configuration"
+supported_os = ["linux", "darwin", "windows"]
+target = "$HOME/.config/ghostty"
+profile_key = "machine"
+
+[profiles.macbook]
+sources = ["common", "macbook"]
+
+[profiles.devstick]
+sources = ["common", "devstick"]

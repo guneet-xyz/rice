@@ -197,3 +197,51 @@
 - testify/assert and testify/require for assertions
 - Error message includes both profile name and available alternatives
 - Alphabetical sorting of available profiles in error (for deterministic output)
+
+## Task 24: Logging Package (COMPLETED)
+
+### Execution Summary
+- Added go.uber.org/zap v1.28.0 dependency
+- Implemented internal/logger/logger.go with:
+  - Level type with 5 levels: Debug, Info, Warn, Error, Critical
+  - CriticalLevel = ErrorLevel + 1 (custom level above Error)
+  - ParseLevel() for case-insensitive level parsing with error messages
+  - Init() with tee architecture: console (STDERR) + file (JSON, always DEBUG)
+  - DefaultLogPath() using os.UserConfigDir() with fallback
+  - Package-level functions: Debug, Info, Warn, Error, Critical
+  - Critical() auto-appends github_issue_url field
+  - Sync() for flushing logger
+  - L initialized as zap.NewNop() for safe pre-Init usage
+- Implemented comprehensive test suite (14 tests):
+  - ParseLevel: case-insensitive, whitespace handling, error messages
+  - Level ordering: CriticalLevel > ErrorLevel
+  - File creation and parent directory creation
+  - File always at DebugLevel regardless of console level
+  - Console filtering respects level threshold
+  - Critical includes github_issue_url field
+  - DefaultLogPath returns absolute path with rice/logs/rice.log
+  - JSON format validation for file logs
+  - All tests pass with -race flag
+
+### Key Implementation Details
+- Console encoder: zap.NewDevelopmentEncoderConfig() for human-readable output
+- File encoder: zap.NewProductionEncoderConfig() for JSON format
+- Tee core: zapcore.NewTee(consoleCore, fileCore) for dual output
+- File open: os.O_APPEND|os.O_CREATE|os.O_WRONLY with 0644 mode
+- Parent dir creation: os.MkdirAll with 0755 mode
+- Critical level logging: L.Log(zapcore.Level(CriticalLevel), ...)
+
+### Test Coverage
+- 15 test cases covering all public functions
+- Stderr capture for console filtering verification
+- JSON parsing for file output validation
+- Temp directories for file creation tests
+- Error cases: invalid paths, invalid levels
+- Edge cases: empty strings, whitespace, case variations
+
+### Conventions Established
+- Logger package is safe to use before Init() (nop logger)
+- Console output always to STDERR (stdout reserved for command output)
+- File always at DEBUG level for complete audit trail
+- Critical logs always include github issue URL for bug reporting
+- DefaultLogPath follows XDG conventions with Windows fallback

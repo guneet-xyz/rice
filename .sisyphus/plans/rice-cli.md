@@ -1853,7 +1853,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `README.md`
   - Pre-commit: none
 
-- [ ] 24. **Logging package (zap-based, 5 levels including custom CRITICAL)**
+- [x] 24. **Logging package (zap-based, 5 levels including custom CRITICAL)**
 
   **What to do**:
   - Create `internal/logger/logger.go` exposing a package-level logger plus init function:
