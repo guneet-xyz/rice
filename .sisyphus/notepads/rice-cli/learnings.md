@@ -346,3 +346,77 @@
 - Idempotent by design: existing correct symlinks don't block
 - ignoreTargets parameter enables switch pre-flight to exclude old links
 - Error handling: filesystem errors treated as conflicts (conservative)
+
+## Task 25: Plan + Confirmation Prompt Utility (COMPLETED)
+
+### Execution Summary
+- internal/plan/plan.go: OpKind, Op, Conflict, Plan types with IsEmpty() method
+- internal/plan/plan_test.go: 4 test cases covering IsEmpty() logic
+- internal/prompt/prompt.go: RenderPlan, RenderSwitchPlan, RenderConflicts, Confirm functions
+- internal/prompt/prompt_test.go: 9 test functions with 30+ test cases
+- All tests pass with race detector: `go test ./internal/plan/... ./internal/prompt/... -race`
+- Build verified: `go build ./...` passes
+- Commit: feat(plan,prompt): add Plan type, renderer, and y/N confirmation
+
+### Key Implementation Details
+- OpKind: enum-style (OpCreate=0, OpRemove=1)
+- Op: Kind, Source (empty for remove), Target fields
+- Conflict: Target, Source, Reason fields
+- Plan: PackageName, Profile, Ops, Conflicts fields
+- RenderPlan: detects install vs uninstall from first Op kind; uses text/tabwriter for alignment
+- RenderSwitchPlan: prints uninstall phase, then install phase, combined total
+- RenderConflicts: simple line-by-line format
+- Confirm: default NO on bare Enter; accepts "y"/"yes" (case-insensitive); returns (false, nil) on EOF
+
+### Test Coverage
+- plan.IsEmpty(): 4 cases (empty, with ops, with conflicts, with both)
+- RenderPlan: empty install, create ops, remove ops, 100 ops (no truncation)
+- RenderSwitchPlan: both phases present with correct totals
+- RenderConflicts: correct format
+- Confirm: y/Y/yes/YES (true), bare enter/n/N/no/NO/random (false), EOF (false, nil), error handling
+
+### Conventions Applied
+- text/tabwriter for column alignment (2-space padding)
+- bufio.NewReader for line reading
+- strings.TrimSpace + strings.ToLower for input normalization
+- io.EOF treated as (false, nil) per spec
+- Docstrings follow Go conventions for exported types/functions
+
+## Task 10: Install Orchestrator (COMPLETED)
+
+### Execution Summary
+- internal/installer/install.go: InstallRequest, InstallResult, BuildInstallPlan, ExecuteInstallPlan, Install
+- internal/installer/install_test.go: 11 tests covering build (no FS touch), multi-source, single-source, rice.toml skip, conflict detection, execute symlinks, state update, OS gate, unknown package, unknown profile, idempotency, full flow
+- testdata/install/mypkg/ fixture with rice.toml + 3 source files (root, common, macbook)
+- All tests pass with -race
+
+### Key Design Choices
+- Build/Execute split: BuildInstallPlan is pure (no FS writes), ExecuteInstallPlan applies. CLI inserts confirmation between them.
+- Multi-source override: when same target appears in multiple sources, LATER source wins (replaces in ops list keyed by target).
+- Idempotency: in ExecuteInstallPlan, if CreateSymlink fails AND IsSymlinkTo confirms target already points to our source, treat as success.
+- Partial failure: save partial state (created links so far) before returning error, so doctor/uninstall can clean up.
+- Defense-in-depth: withinHome() check ensures target paths cannot escape HomeDir via path traversal.
+- $HOME / %USERPROFILE% expansion in m.Target.
+- rice.toml files in source trees are skipped (logged as WARN).
+- Symlinks in source trees are skipped (we only manage real files).
+
+### Gotchas
+- sources=["."] walks the entire package root including subdirs like common/, macbook/. The fixture design must account for this if "common" profile is intended to be minimal.
+- DetectConflicts already handles idempotent symlinks (existing symlink to our source = NOT a conflict), so re-running install with same args naturally succeeds.
+
+## Task 12: Switch Orchestrator (COMPLETED)
+
+### Execution Summary
+- internal/installer/switch.go: SwitchRequest, SwitchPlan, BuildSwitchPlan, ExecuteSwitchPlan, Switch
+- internal/installer/switch_test.go: 7 tests covering not-installed, happy path, missing profile, foreign-file conflict, ignoreTargets reuse, execute happy, convenience wrapper
+- All tests pass with -race
+- Commit: 539c6df
+
+### Key Implementation Details
+- BuildSwitchPlan does NOT touch FS — load state, build uninstall+install plans, re-run DetectConflicts with ignoreTargets from uninstall ops
+- BuildInstallPlan may return (plan, err) on conflicts; we keep the plan and re-check, then clear stale conflicts
+- ExecuteSwitchPlan: uninstall first, then install; on install failure logs recovery message ("rice install <pkg> --profile <profile>") and returns error
+- Profile fixture caveat: common (sources=["."]) walks subdirs, producing targets like ~/common/.config/mypkg/base.toml — does NOT overlap with macbook profile (which produces ~/.config/mypkg/base.toml). Fixed pre-flight reuse test by switching macbook→macbook with a manually-placed foreign file at an old target.
+
+### Test Pattern: ignoreTargets validation
+- To validate that old-link reuse is NOT a conflict: install profile X, replace one symlink with a foreign file, BuildSwitchPlan to profile X again. Without ignoreTargets this would conflict; with it, it must be empty conflicts.

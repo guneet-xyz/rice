@@ -1,0 +1,11 @@
+schema_version = 1
+name = "mypkg"
+description = "Test package fixture"
+supported_os = ["linux", "darwin", "windows"]
+target = "$HOME"
+
+[profiles.common]
+sources = ["."]
+
+[profiles.macbook]
+sources = ["common", "macbook"]

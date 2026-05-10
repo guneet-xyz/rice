@@ -80,6 +80,33 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-05-10T15:45:29.109Z"
+    },
+    "todo:10": {
+      "task_key": "todo:10",
+      "task_label": "10",
+      "task_title": "**Install orchestrator**",
+      "session_id": "ses_1ed6cd254ffeljRUVEPKhZkEAQ",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-10T15:51:37.944Z"
+    },
+    "todo:11": {
+      "task_key": "todo:11",
+      "task_label": "11",
+      "task_title": "**Uninstall orchestrator**",
+      "session_id": "ses_1ed69286cffeRJThP2uEdQ6xMG",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T16:00:01.350Z"
+    },
+    "todo:12": {
+      "task_key": "todo:12",
+      "task_label": "12",
+      "task_title": "**Switch orchestrator with pre-flight validation**",
+      "session_id": "ses_1ed54fd0cffemN2gPigF2LTK2W",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-10T16:16:37.802Z"
     }
   }
 }

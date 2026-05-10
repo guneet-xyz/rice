@@ -796,7 +796,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/installer/conflict.go`, `internal/installer/conflict_test.go`
   - Pre-commit: `go test ./internal/installer/...`
 
-- [ ] 10. **Install orchestrator**
+- [x] 10. **Install orchestrator**
 
   **What to do**:
   - Create `internal/installer/install.go` with:
@@ -891,7 +891,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/installer/install.go`, `internal/installer/install_test.go`, `internal/installer/testdata/install/...`
   - Pre-commit: `go test ./internal/installer/... -race`
 
-- [ ] 11. **Uninstall orchestrator**
+- [x] 11. **Uninstall orchestrator**
 
   **What to do**:
   - In `internal/installer/uninstall.go`:
@@ -956,7 +956,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/installer/uninstall.go`, `internal/installer/uninstall_test.go`
   - Pre-commit: `go test ./internal/installer/... -race`
 
-- [ ] 12. **Switch orchestrator with pre-flight validation**
+- [x] 12. **Switch orchestrator with pre-flight validation**
 
   **What to do**:
   - In `internal/installer/switch.go`:
@@ -1945,7 +1945,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/logger/logger.go`, `internal/logger/logger_test.go`, `go.mod`, `go.sum`
   - Pre-commit: `go test ./internal/logger/... -race`
 
-- [ ] 25. **Plan + confirmation prompt utility**
+- [x] 25. **Plan + confirmation prompt utility**
 
   **What to do**:
   - Create `internal/plan/plan.go`:
