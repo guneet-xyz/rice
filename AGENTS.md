@@ -18,8 +18,8 @@ If you are adding a feature, prefer extending an existing `internal/` package ov
 
 ```
 rice/
-├── cmd/rice/            # CLI entrypoint (main.go) and cobra commands
-│   └── cmd/             # install, uninstall, switch, status, doctor, root, version
+├── cli/                 # CLI entrypoint and cobra commands (package main)
+│   └── main.go, root.go, install.go, switch.go, uninstall.go, status.go, doctor.go, version.go
 ├── internal/
 │   ├── manifest/        # rice.toml parsing + schema
 │   ├── profile/         # profile resolution + source composition

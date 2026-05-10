@@ -18,7 +18,7 @@ If you've ever run `stow nvim` on one machine and `bash install.sh` on another, 
 
 ```sh
 # Build the binary
-go build -o rice ./cmd/rice
+go build -o rice ./cli
 
 # Install a package using the macbook profile
 ./rice install ghostty --profile macbook --repo .
