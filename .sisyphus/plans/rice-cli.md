@@ -1031,7 +1031,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/installer/switch.go`, `internal/installer/switch_test.go`
   - Pre-commit: `go test ./internal/installer/... -race`
 
-- [ ] 13. **CLI scaffold + cobra setup + root cmd**
+- [x] 13. **CLI scaffold + cobra setup + root cmd**
 
   **What to do**:
   - In `cmd/rice/main.go`: replace stub with `cmd.Execute()` invocation
@@ -1088,7 +1088,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `cmd/rice/main.go`, `cmd/rice/cmd/root.go`, `cmd/rice/cmd/version.go`, `cmd/rice/cmd/root_test.go`
   - Pre-commit: `go build ./... && go test ./cmd/...`
 
-- [ ] 14. **install command**
+- [x] 14. **install command**
 
   **What to do**:
   - `cmd/rice/cmd/install.go`: cobra command `rice install <package> --profile <name>`. Flow:
@@ -1196,7 +1196,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `cmd/rice/cmd/install.go`, `cmd/rice/cmd/install_test.go`
   - Pre-commit: `go build ./... && go test ./cmd/...`
 
-- [ ] 15. **uninstall command**
+- [x] 15. **uninstall command**
 
   **What to do**:
   - `cmd/rice/cmd/uninstall.go`: `rice uninstall <package>`. Flow:
@@ -1281,7 +1281,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `cmd/rice/cmd/uninstall.go`, `cmd/rice/cmd/uninstall_test.go`
   - Pre-commit: `go build ./... && go test ./cmd/...`
 
-- [ ] 16. **switch command**
+- [x] 16. **switch command**
 
   **What to do**:
   - `cmd/rice/cmd/switch.go`: `rice switch <package> <newProfile>`. Flow:
@@ -1384,7 +1384,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `cmd/rice/cmd/switch.go`, `cmd/rice/cmd/switch_test.go`
   - Pre-commit: `go build ./... && go test ./cmd/...`
 
-- [ ] 17. **status command**
+- [x] 17. **status command**
 
   **What to do**:
   - `cmd/rice/cmd/status.go`: `rice status`. Reads state file, prints table of installed packages with profile and symlink count. If state file missing, prints "no packages installed".
@@ -1445,7 +1445,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `cmd/rice/cmd/status.go`, `cmd/rice/cmd/status_test.go`
   - Pre-commit: `go build ./... && go test ./cmd/...`
 
-- [ ] 18. **doctor command**
+- [x] 18. **doctor command**
 
   **What to do**:
   - `cmd/rice/cmd/doctor.go`: `rice doctor`. Performs:
@@ -1510,7 +1510,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `cmd/rice/cmd/doctor.go`, `cmd/rice/cmd/doctor_test.go`
   - Pre-commit: `go build ./... && go test ./cmd/... -race`
 
-- [ ] 19. **Add rice.toml to nvim, zsh, hyprland, waybar, wofi**
+- [x] 19. **Add rice.toml to nvim, zsh, hyprland, waybar, wofi**
 
   **What to do**:
   - For each of these 5 packages, add a `rice.toml` at `<package>/rice.toml`. Most are single-profile (just one profile named "common" with `sources = ["."]` to stow the package dir itself). Use the schema from Task 2.
@@ -1568,7 +1568,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `nvim/rice.toml`, `zsh/rice.toml`, `hyprland/rice.toml`, `waybar/rice.toml`, `wofi/rice.toml`
   - Pre-commit: `go test ./internal/manifest/...`
 
-- [ ] 20. **Migrate ghostty (delete install.sh, restructure, add rice.toml)**
+- [x] 20. **Migrate ghostty (delete install.sh, restructure, add rice.toml)**
 
   **What to do**:
   - Read current `ghostty/install.sh` to understand the common+overlay logic. Confirm: it copies `ghostty/common/` then overlays `ghostty/<machine>/`.
@@ -1637,7 +1637,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `ghostty/rice.toml`, deletes `ghostty/install.sh`
   - Pre-commit: `go test ./internal/manifest/... ./internal/installer/...`
 
-- [ ] 21. **Split opencode skills into personal/work profiles + rice.toml**
+- [x] 21. **Split opencode skills into personal/work profiles + rice.toml**
 
   **What to do**:
   - **Goal**: Make `opencode` a multi-profile package so `rice switch opencode personal|work` flips between two skill sets.
@@ -1715,7 +1715,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `opencode/rice.toml`, restructured `opencode/{common,personal,work}/...`, removed top-level `opencode/.agents/` and `opencode/.config/`
   - Pre-commit: `go test ./internal/manifest/... ./internal/profile/...`
 
-- [ ] 22. **Write AGENTS.md documenting rice conventions**
+- [x] 22. **Write AGENTS.md documenting rice conventions**
 
   **What to do**:
   - Create `/Users/guneet/rice/AGENTS.md` (repo root) with sections:
@@ -1795,7 +1795,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `AGENTS.md`
   - Pre-commit: none
 
-- [ ] 23. **Rewrite README.md for rice CLI workflow**
+- [x] 23. **Rewrite README.md for rice CLI workflow**
 
   **What to do**:
   - Replace the current stow-based README with a rice-CLI-focused one. Sections:

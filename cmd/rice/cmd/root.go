@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spf13/cobra"
 	"github.com/guneet/rice/internal/logger"
 	"github.com/guneet/rice/internal/state"
+	"github.com/spf13/cobra"
 )
 
 const Version = "0.1.0"

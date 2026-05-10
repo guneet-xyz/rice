@@ -12,16 +12,18 @@ import (
 
 // RenderPlan writes the human-readable plan to w.
 // Format for install:
-//   Plan: install <pkg> (profile: <name>)
-//     CREATE  <target>  →  <source>
-//     ...
-//   Total: N symlinks to create.
+//
+//	Plan: install <pkg> (profile: <name>)
+//	  CREATE  <target>  →  <source>
+//	  ...
+//	Total: N symlinks to create.
 //
 // Format for uninstall:
-//   Plan: uninstall <pkg>
-//     REMOVE  <target>
-//     ...
-//   Total: N symlinks to remove.
+//
+//	Plan: uninstall <pkg>
+//	  REMOVE  <target>
+//	  ...
+//	Total: N symlinks to remove.
 //
 // NEVER truncates — prints every op.
 func RenderPlan(w io.Writer, p *plan.Plan) {
@@ -102,7 +104,8 @@ func RenderSwitchPlan(w io.Writer, uninstall *plan.Plan, install *plan.Plan) {
 }
 
 // RenderConflicts writes conflict lines to w.
-//   CONFLICT  <target>: <reason>
+//
+//	CONFLICT  <target>: <reason>
 func RenderConflicts(w io.Writer, conflicts []plan.Conflict) {
 	for _, c := range conflicts {
 		fmt.Fprintf(w, "CONFLICT  %s: %s\n", c.Target, c.Reason)

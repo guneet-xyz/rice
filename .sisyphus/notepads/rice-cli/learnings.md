@@ -420,3 +420,102 @@
 
 ### Test Pattern: ignoreTargets validation
 - To validate that old-link reuse is NOT a conflict: install profile X, replace one symlink with a foreign file, BuildSwitchPlan to profile X again. Without ignoreTargets this would conflict; with it, it must be empty conflicts.
+
+## Task 13: CLI Scaffold + Cobra Setup (COMPLETED)
+
+### Execution Summary
+- Replaced cmd/rice/cmd/root.go with full cobra root command
+- Created cmd/rice/cmd/version.go subcommand
+- Created cmd/rice/cmd/root_test.go with 5 smoke tests
+- All tests pass with race detector: `go test ./cmd/... -race`
+- Binary builds and version command works: `go build -o /tmp/rice ./cmd/rice && /tmp/rice version`
+- Commit: feat(cli): add cobra root cmd with --log-level, --yes, --repo, --state flags
+
+### Key Implementation Details
+- Root command uses PersistentPreRunE to initialize logger before any subcommand runs
+- PersistentPostRun calls logger.Sync() to flush logs
+- Log level resolution: flag > env var (RICE_LOG_LEVEL) > default (warn)
+- Global flags: --repo, --state, --log-level, --yes (-y)
+- Version constant: "0.1.0" defined in root.go
+- Version subcommand: simple RunE that prints "rice version X.Y.Z"
+
+### Testing Patterns
+- Cobra tests require resetting global flag variables between test runs
+- Created resetRootCmd() helper to reset flagRepo, flagState, flagLogLevel, flagYes
+- Tests verify: version output, invalid log level error, help text, env var resolution, flag override
+- SetArgs() must be called before Execute() to set command-line arguments
+- SetOut/SetErr work for help output but not for command output (fmt.Println goes to stdout)
+
+### Cobra Integration Notes
+- github.com/spf13/cobra v1.10.2 added to go.mod
+- Cobra automatically adds --help flag and generates usage text
+- PersistentFlags are inherited by all subcommands
+- Command.Execute() returns error on failure (non-zero exit handled by main.go)
+- Global flag variables must be declared at package level for init() to bind them
+
+### Lessons Learned
+- Cobra's global singleton rootCmd requires careful test isolation
+- Flag values persist across test runs unless explicitly reset
+- Logger initialization in PersistentPreRunE happens before subcommand runs
+- Version constant should be defined in root.go for easy access by subcommands
+
+## Task 14: rice install command (COMPLETED)
+
+### Execution Summary
+- cmd/rice/cmd/install.go: cobra subcommand wiring BuildInstallPlan -> RenderPlan -> Confirm -> ExecuteInstallPlan
+- cmd/rice/cmd/install_test.go: 5 tests covering --yes, stdin y/n, missing args, --profile flag
+- Per-test temp repo + fake $HOME via t.Setenv("HOME", ...) ensures isolation
+- All tests pass with -race; lsp diagnostics clean
+
+### Gotchas Discovered
+- prompt.RenderPlan signature is RenderPlan(io.Writer, *plan.Plan) — task spec showed RenderPlan(plan)
+- prompt.Confirm signature is Confirm(io.Reader, io.Writer, string) — task spec showed Confirm(msg)
+- installer.ExecuteInstallPlan returns (*InstallResult, error) — task spec showed single error return
+- profile.Resolve does NOT auto-detect from hostname for empty profile string; tests must pass --profile explicitly
+- Cobra's SetIn/SetOut/SetErr persist across rootCmd.Execute() calls — must restore in test helper to avoid pollution between tests
+- runtime.GOOS used directly; HomeDir resolved via os.UserHomeDir() (overridable in tests via HOME env var)
+
+## Task 15: rice uninstall command (COMPLETED)
+
+### Execution Summary
+- cmd/rice/cmd/uninstall.go: cobra command, mirrors install.go pattern
+- prompt.RenderPlan auto-detects uninstall via OpRemove kind → "Plan: uninstall <pkg>" header
+- ExecuteUninstallPlan returns single error (not (_, error) like ExecuteInstallPlan)
+- Tests reuse runInstallCmd helper from install_test.go (works for any subcommand)
+- State setup in tests done by running `install --yes` first via the same rootCmd
+- All 5 tests pass with -race
+- Commit: feat(cli): add uninstall command
+
+## Task 16: rice switch command (COMPLETED)
+- Pattern matches install.go/uninstall.go: BuildPlan → Render → Confirm (unless --yes) → Execute
+- prompt.RenderSwitchPlan(w, uninstallPlan, installPlan) — renders both phases + combined total
+- installer.SwitchRequest takes RepoRoot, PackageName, NewProfile, CurrentOS, HomeDir, StatePath
+- ExecuteSwitchPlan(sp, statePath) returns single error; no count return (unlike ExecuteInstallPlan)
+- Tests reuse runInstallCmd helper from install_test.go (it just dispatches via root)
+- All 6 tests pass with -race
+
+## Task 17: rice status command (COMPLETED)
+
+### Execution Summary
+- cmd/rice/cmd/status.go: reads state.Load(flagState), iterates packages, checks each link via symlink.IsSymlinkTo
+- Optional positional arg filters to a single package; unknown filter prints nothing (no error)
+- Empty state prints "No packages installed."
+- Uses "OK" / "BROKEN" markers (avoiding non-ASCII to keep test assertions simple)
+- 5 test cases: no-packages, healthy, filter, broken (symlink to wrong source), filter-unknown
+- All `go test ./cmd/... -race` pass; `go build ./cmd/rice` succeeds
+- Commit: feat(cli): add status command
+
+### Gotchas
+- symlink.IsSymlinkTo signature is (target, source string) (bool, error) — must handle both bool and error
+- state.PackageState field is `InstalledLinks` (not `Links` as task spec example suggested)
+- state.Load already returns empty State on ErrNotExist (no need for os.IsNotExist check in caller)
+
+## Task 18: rice doctor (COMPLETED)
+
+### Summary
+- cmd/rice/cmd/doctor.go: read-only health checker (state file, symlink integrity, repo accessibility)
+- cmd/rice/cmd/doctor_test.go: 5 test cases (no state, healthy, missing link, replaced link, bad repo)
+- state.Load returns (State{}, nil) when file missing — no error needed for absent state
+- IsSymlinkTo signature: (target, source string) (bool, error) — note target FIRST
+- doctor returns non-zero error when issues > 0; "All checks passed." on clean
+- Commit: feat(cli): add doctor command

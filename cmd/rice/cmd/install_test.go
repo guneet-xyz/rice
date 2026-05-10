@@ -152,4 +152,3 @@ func TestInstall_WithProfileFlag(t *testing.T) {
 		assert.NoError(t, err, "expected symlink %s", rel)
 	}
 }
-

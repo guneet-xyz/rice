@@ -15,7 +15,7 @@ func TestDefaultPath(t *testing.T) {
 	path := DefaultPath()
 	assert.NotEmpty(t, path)
 	assert.True(t, filepath.IsAbs(path), "DefaultPath should return absolute path")
-	
+
 	configDir, err := os.UserConfigDir()
 	require.NoError(t, err)
 	assert.True(t, len(path) > len(configDir) && path[:len(configDir)] == configDir, "DefaultPath should be in config directory")

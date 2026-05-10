@@ -2,8 +2,8 @@ package installer
 
 import (
 	"fmt"
-	"os"
 	"github.com/guneet/rice/internal/symlink"
+	"os"
 )
 
 // Conflict describes a symlink target that cannot be created.

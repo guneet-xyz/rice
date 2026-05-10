@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/guneet/rice/internal/plan"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRenderPlan_EmptyInstall(t *testing.T) {

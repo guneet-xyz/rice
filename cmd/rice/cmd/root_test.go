@@ -89,8 +89,3 @@ func TestLogLevelFlagOverridesEnv(t *testing.T) {
 	err := cmd.Execute()
 	require.NoError(t, err)
 }
-
-
-
-
-

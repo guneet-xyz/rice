@@ -8,10 +8,10 @@ import (
 
 func TestValidate(t *testing.T) {
 	tests := []struct {
-		name    string
+		name     string
 		manifest *Manifest
-		wantErr bool
-		errMsg  string
+		wantErr  bool
+		errMsg   string
 	}{
 		// Rule 1: SchemaVersion must be 1
 		{
