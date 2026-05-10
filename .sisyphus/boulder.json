@@ -58,10 +58,28 @@
       "task_key": "todo:7",
       "task_label": "7",
       "task_title": "**Manifest discovery + parsing**",
-      "session_id": "ses_1ed76dab7ffeaXO3SkDLXL48W3",
+      "session_id": "ses_1ed74a1a9ffej2F6NDKQROaSF1",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T15:38:58.272Z"
+      "updated_at": "2026-05-10T15:42:55.010Z"
+    },
+    "todo:8": {
+      "task_key": "todo:8",
+      "task_label": "8",
+      "task_title": "**Package OS gating**",
+      "session_id": "ses_1ed7157cbffeJHYWyQ0o88aVx6",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T15:44:01.153Z"
+    },
+    "todo:9": {
+      "task_key": "todo:9",
+      "task_label": "9",
+      "task_title": "**Conflict detection**",
+      "session_id": "ses_1ed703b23ffeecBa1E4f6KYFpm",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T15:45:29.109Z"
     }
   }
 }

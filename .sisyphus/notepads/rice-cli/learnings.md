@@ -245,3 +245,104 @@
 - File always at DEBUG level for complete audit trail
 - Critical logs always include github issue URL for bug reporting
 - DefaultLogPath follows XDG conventions with Windows fallback
+
+## Task 7: Manifest Discovery + Parsing (COMPLETED)
+
+### Execution Summary
+- Implemented Load(dir string) function: reads rice.toml, parses with BurntSushi/toml, validates
+- Implemented Discover(repoRoot string) function: walks one level deep, collects valid manifests
+- Created comprehensive test suite with 9 test cases covering all scenarios
+- Test fixtures: testdata/manifest/ (with bad/ for error testing) and testdata/manifest_valid/ (for discovery tests)
+- All tests pass with race detector enabled
+- Build verified: `go build ./...` passes
+- Commit: feat(manifest): add manifest discovery and TOML parsing
+
+### Key Implementation Details
+- Load: Returns error if file missing, TOML parse fails, or validation fails
+- Discover: One-level-deep walk only (packages are direct children of repoRoot)
+- Discover: Silently skips directories without rice.toml
+- Discover: Returns error if rice.toml found but fails parse/validate
+- Discover: Skips non-directory entries at repoRoot level
+- Used runtime.Caller() in tests to resolve testdata paths correctly
+
+### Test Coverage
+- Load happy path: valid manifest parsing
+- Load file not found: error handling
+- Load invalid TOML: parse error handling
+- Load validation failure: validation error handling
+- Discover finds all valid manifests: multi-manifest discovery
+- Discover returns error on invalid manifest: error propagation
+- Discover skips dirs without rice.toml: selective discovery
+- Discover empty repository: empty result handling
+- Discover multi-profile manifest: complex manifest handling
+
+### Conventions Established
+- Testdata organized by scenario (manifest/ for error cases, manifest_valid/ for success cases)
+- Test helper functions for path resolution (getTestdataDir, getTestdataManifestDir)
+- Error messages include context (directory path, manifest name, etc.)
+
+## Task 8: Package OS Gating (COMPLETED)
+
+### Execution Summary
+- CheckOS function: Validates currentOS against m.SupportedOS
+- Error format: "package %q does not support %s; supported: %s"
+- Defensive check: Handles empty SupportedOS (shouldn't happen post-Validate)
+- Test coverage: 10 table-driven test cases covering all scenarios
+- All tests pass with race detector enabled
+- Build verified: `go build ./...` passes
+- Commit: feat(manifest): add OS gating check
+
+### Key Implementation Details
+- CheckOS accepts currentOS as parameter (not calling runtime.GOOS internally)
+- Returns nil if currentOS is in SupportedOS list
+- Returns descriptive error with supported OS list if not found
+- Defensive: checks for empty SupportedOS and returns appropriate error
+- Test cases: single OS match, multi-OS match, unsupported OS, empty SupportedOS
+
+### Test Coverage
+- linux package on linux → nil
+- darwin package on darwin → nil
+- linux-only package on windows → error with "windows" and "linux"
+- multi-OS package (linux+darwin) on darwin → nil
+- multi-OS package (linux+darwin) on windows → error with "linux, darwin"
+- empty SupportedOS → error (defensive)
+- windows package on windows → nil
+- all three OSes supported on linux → nil
+
+## Task 9: Conflict Detection (COMPLETED)
+
+### Execution Summary
+- Created internal/installer/conflict.go with Conflict type and DetectConflicts function
+- Created internal/installer/conflict_test.go with 8 comprehensive test cases
+- All tests pass with race detector enabled: `go test ./internal/installer/... -race`
+- Build verified: `go build ./...` passes
+- Commit: feat(installer): add conflict detection
+
+### Key Implementation Details
+- Conflict struct: Target, Source, Reason fields with Error() method
+- PlannedLink struct: Source, Target pair for symlink creation
+- DetectConflicts function:
+  - Checks each planned link for conflicts
+  - Skips targets in ignoreTargets map (for switch pre-flight)
+  - Returns empty slice if no conflicts
+  - Idempotent: symlink already pointing to source = no conflict
+  - Detects: regular files, directories, symlinks pointing elsewhere
+  - Uses symlink.IsSymlinkTo() for idempotency check
+  - Uses os.Readlink() to get other symlink destinations
+
+### Test Coverage
+- No conflicts when targets don't exist
+- No conflict when target is already our symlink (idempotent)
+- Conflict when target is a regular file → "existing file"
+- Conflict when target is a directory → "existing directory"
+- Conflict when target is a symlink pointing elsewhere → "symlink points to <path>"
+- ignoreTargets: targets in map are skipped even if they would conflict
+- Multiple conflicts returned in one call
+- Conflict.Error() method formats error message correctly
+
+### Design Decisions
+- Read-only detection: no modifications to filesystem
+- No "force" mode: conflicts are always reported
+- Idempotent by design: existing correct symlinks don't block
+- ignoreTargets parameter enables switch pre-flight to exclude old links
+- Error handling: filesystem errors treated as conflicts (conservative)

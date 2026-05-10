@@ -625,7 +625,7 @@ Max Concurrent: 7 (Wave 1)
 
   **Commit**: NO (untracked dirs being deleted produce no diff). Skip commit; just confirm cleanup in a status report.
 
-- [ ] 7. **Manifest discovery + parsing**
+- [x] 7. **Manifest discovery + parsing**
 
   **What to do**:
   - Create `internal/manifest/discover.go` with:
@@ -689,7 +689,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/manifest/discover.go`, `internal/manifest/discover_test.go`, `internal/manifest/testdata/discover/...`
   - Pre-commit: `go test ./internal/manifest/...`
 
-- [ ] 8. **Package OS gating**
+- [x] 8. **Package OS gating**
 
   **What to do**:
   - Create `internal/installer/os_gate.go` with:
@@ -735,7 +735,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/installer/os_gate.go`, `internal/installer/os_gate_test.go`
   - Pre-commit: `go test ./internal/installer/...`
 
-- [ ] 9. **Conflict detection**
+- [x] 9. **Conflict detection**
 
   **What to do**:
   - Create `internal/installer/conflict.go` with:
