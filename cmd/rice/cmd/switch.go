@@ -41,11 +41,12 @@ func runSwitch(cmd *cobra.Command, args []string) error {
 	}
 
 	sp, err := installer.BuildSwitchPlan(req)
+	if sp != nil {
+		prompt.RenderSwitchPlan(cmd.OutOrStdout(), sp.Uninstall, sp.Install)
+	}
 	if err != nil {
 		return fmt.Errorf("build plan: %w", err)
 	}
-
-	prompt.RenderSwitchPlan(cmd.OutOrStdout(), sp.Uninstall, sp.Install)
 
 	if !flagYes {
 		ok, err := prompt.Confirm(cmd.InOrStdin(), cmd.OutOrStdout(), "Proceed?")

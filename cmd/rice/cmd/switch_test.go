@@ -99,6 +99,30 @@ func TestSwitch_OneArgErrors(t *testing.T) {
 	require.Error(t, err)
 }
 
+func TestSwitch_ShowsConflictDetails(t *testing.T) {
+	resetInstallFlags()
+	repoRoot, statePath, homeDir := setupTestRepo(t)
+	installCommonForSwitch(t, repoRoot, statePath)
+
+	// machine.toml is only in the macbook profile (not common), so the
+	// uninstall phase of switch won't touch it. Pre-create a regular file
+	// at its target so the install phase reports a conflict.
+	conflictTarget := filepath.Join(homeDir, ".config", "mypkg", "machine.toml")
+	require.NoError(t, os.MkdirAll(filepath.Dir(conflictTarget), 0o755))
+	require.NoError(t, os.WriteFile(conflictTarget, []byte("foreign\n"), 0o644))
+
+	resetInstallFlags()
+	out, err := runInstallCmd(t, "",
+		"--repo", repoRoot,
+		"--state", statePath,
+		"--yes",
+		"switch", "mypkg", "macbook",
+	)
+	require.Error(t, err, "expected error due to conflict")
+	assert.Contains(t, out, "CONFLICT")
+	assert.Contains(t, out, conflictTarget)
+}
+
 func TestSwitch_NotInstalledErrors(t *testing.T) {
 	resetInstallFlags()
 	repoRoot, statePath, _ := setupTestRepo(t)

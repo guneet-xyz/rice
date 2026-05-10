@@ -70,6 +70,12 @@ func RenderPlan(w io.Writer, p *plan.Plan) {
 	} else {
 		fmt.Fprintf(w, "Total: %d symlinks to remove.\n", count)
 	}
+
+	// Conflicts (if any)
+	if len(p.Conflicts) > 0 {
+		fmt.Fprintf(w, "\nConflicts (%d):\n", len(p.Conflicts))
+		RenderConflicts(w, p.Conflicts)
+	}
 }
 
 // RenderSwitchPlan writes the combined switch plan (uninstall + install phases).
@@ -101,6 +107,12 @@ func RenderSwitchPlan(w io.Writer, uninstall *plan.Plan, install *plan.Plan) {
 	// Combined total
 	totalOps := len(uninstall.Ops) + len(install.Ops)
 	fmt.Fprintf(w, "Total: %d symlinks (%d remove, %d create).\n", totalOps, len(uninstall.Ops), len(install.Ops))
+
+	// Conflicts from install phase (if any)
+	if len(install.Conflicts) > 0 {
+		fmt.Fprintf(w, "\nConflicts (%d):\n", len(install.Conflicts))
+		RenderConflicts(w, install.Conflicts)
+	}
 }
 
 // RenderConflicts writes conflict lines to w.

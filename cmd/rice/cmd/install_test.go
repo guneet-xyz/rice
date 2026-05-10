@@ -133,6 +133,26 @@ func TestInstall_NoArgsErrors(t *testing.T) {
 	require.Error(t, err)
 }
 
+func TestInstall_ShowsConflictDetails(t *testing.T) {
+	resetInstallFlags()
+	repoRoot, statePath, homeDir := setupTestRepo(t)
+
+	conflictTarget := filepath.Join(homeDir, ".config", "mypkg", "base.toml")
+	require.NoError(t, os.MkdirAll(filepath.Dir(conflictTarget), 0o755))
+	require.NoError(t, os.WriteFile(conflictTarget, []byte("existing\n"), 0o644))
+
+	out, err := runInstallCmd(t, "",
+		"--repo", repoRoot,
+		"--state", statePath,
+		"--yes",
+		"install", "mypkg",
+		"--profile", "common",
+	)
+	require.Error(t, err, "expected error due to conflict")
+	assert.Contains(t, out, "CONFLICT")
+	assert.Contains(t, out, conflictTarget)
+}
+
 func TestInstall_WithProfileFlag(t *testing.T) {
 	resetInstallFlags()
 	repoRoot, statePath, homeDir := setupTestRepo(t)

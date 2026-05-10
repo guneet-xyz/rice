@@ -43,11 +43,12 @@ func runInstall(cmd *cobra.Command, args []string) error {
 	}
 
 	p, err := installer.BuildInstallPlan(req)
+	if p != nil {
+		prompt.RenderPlan(cmd.OutOrStdout(), p)
+	}
 	if err != nil {
 		return fmt.Errorf("build plan: %w", err)
 	}
-
-	prompt.RenderPlan(cmd.OutOrStdout(), p)
 
 	if !flagYes {
 		ok, err := prompt.Confirm(cmd.InOrStdin(), cmd.OutOrStdout(), "Proceed?")
