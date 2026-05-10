@@ -296,7 +296,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `go.mod`, `go.sum`, `cmd/rice/main.go`, `cmd/rice/main_test.go`, `.gitignore`, `.gitkeep` files
   - Pre-commit: `go build ./... && go test ./...`
 
-- [ ] 2. **rice.toml schema definition (Go structs + validation rules)**
+- [x] 2. **rice.toml schema definition (Go structs + validation rules)**
 
   **What to do**:
   - In `internal/manifest/schema.go`, define the `Manifest` struct that mirrors the rice.toml schema:
@@ -385,7 +385,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/manifest/schema.go`, `internal/manifest/validate.go`, `internal/manifest/validate_test.go`
   - Pre-commit: `go test ./internal/manifest/...`
 
-- [ ] 3. **Cross-platform symlink primitives**
+- [x] 3. **Cross-platform symlink primitives**
 
   **What to do**:
   - Create `internal/symlink/symlink.go` with:
@@ -450,7 +450,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/symlink/symlink.go`, `internal/symlink/symlink_test.go`
   - Pre-commit: `go test ./internal/symlink/... -race`
 
-- [ ] 4. **State file format + read/write**
+- [x] 4. **State file format + read/write**
 
   **What to do**:
   - Create `internal/state/state.go` with:
@@ -513,7 +513,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/state/state.go`, `internal/state/state_test.go`
   - Pre-commit: `go test ./internal/state/...`
 
-- [ ] 5. **Profile resolution rules + validation**
+- [x] 5. **Profile resolution rules + validation**
 
   **What to do**:
   - Create `internal/profile/profile.go` with:
@@ -580,7 +580,7 @@ Max Concurrent: 7 (Wave 1)
   - Files: `internal/profile/profile.go`, `internal/profile/profile_test.go`
   - Pre-commit: `go test ./internal/profile/...`
 
-- [ ] 6. **Delete stale dirs (profiles/, scripts/) + commit baseline**
+- [x] 6. **Delete stale dirs (profiles/, scripts/) + commit baseline**
 
   **What to do**:
   - Run `rm -rf profiles/ scripts/` from repo root

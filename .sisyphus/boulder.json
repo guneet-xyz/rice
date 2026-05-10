@@ -17,6 +17,42 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-05-10T14:10:40.565Z"
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "**rice.toml schema definition (Go structs + validation rules)**",
+      "session_id": "ses_1edc5ba45ffet33Jh34ofo8JOk",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T14:14:11.533Z"
+    },
+    "todo:3": {
+      "task_key": "todo:3",
+      "task_label": "3",
+      "task_title": "**Cross-platform symlink primitives**",
+      "session_id": "ses_1edc283fcffeK7k4auZuius8bZ",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T14:15:56.575Z"
+    },
+    "todo:4": {
+      "task_key": "todo:4",
+      "task_label": "4",
+      "task_title": "**State file format + read/write**",
+      "session_id": "ses_1edc0ea76ffeBGcd6dah9vPJQG",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T14:17:40.473Z"
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "**Profile resolution rules + validation**",
+      "session_id": "ses_1ed78797bffeQVci6tNEr480b3",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T15:36:28.927Z"
     }
   }
 }
