@@ -1,6 +1,22 @@
 {
   "active_plan": "/Users/guneet/rice/.sisyphus/plans/rice-cli.md",
   "started_at": "2026-05-10T14:08:10.133Z",
-  "session_ids": ["ses_1ee2a3e57ffel2n67En7SPTrlK"],
-  "plan_name": "rice-cli"
+  "session_ids": [
+    "ses_1ee2a3e57ffel2n67En7SPTrlK"
+  ],
+  "plan_name": "rice-cli",
+  "session_origins": {
+    "ses_1ee2a3e57ffel2n67En7SPTrlK": "direct"
+  },
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "**Go module init + project scaffolding + test infra**",
+      "session_id": "ses_1edc71b5fffepcH6SMXFrm9OWL",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-10T14:10:40.565Z"
+    }
+  }
 }

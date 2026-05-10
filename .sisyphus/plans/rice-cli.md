@@ -228,7 +228,7 @@ Max Concurrent: 7 (Wave 1)
 
 ## TODOs
 
-- [ ] 1. **Go module init + project scaffolding + test infra**
+- [x] 1. **Go module init + project scaffolding + test infra**
 
   **What to do**:
   - `go mod init github.com/guneet/rice` at repo root (use whatever module path matches user's GitHub; if unclear, use `rice` as a placeholder local module path)
