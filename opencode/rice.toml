@@ -1,0 +1,11 @@
+schema_version = 1
+name = "opencode"
+description = "OpenCode AI assistant configuration and skills"
+supported_os = ["linux", "darwin", "windows"]
+target = "$HOME"
+
+[profiles.personal]
+sources = ["personal"]
+
+[profiles.work]
+sources = ["work"]
