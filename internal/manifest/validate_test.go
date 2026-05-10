@@ -21,7 +21,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -33,7 +33,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -46,7 +46,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -61,7 +61,7 @@ func TestValidate(t *testing.T) {
 				Name:          "mypackage",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -73,7 +73,7 @@ func TestValidate(t *testing.T) {
 				Name:          "",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -86,7 +86,7 @@ func TestValidate(t *testing.T) {
 				Name:          "   ",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -101,7 +101,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -113,7 +113,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"darwin"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -125,7 +125,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"windows"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -137,7 +137,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux", "darwin", "windows"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -149,7 +149,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -162,7 +162,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"freebsd"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -175,7 +175,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux", "macos"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -190,7 +190,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -202,8 +202,8 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []string{"file1.txt"}},
-					"work":     {Sources: []string{"file2.txt"}},
+					"personal": {Sources: []SourceSpec{{Path: "file1.txt"}}},
+					"work":     {Sources: []SourceSpec{{Path: "file2.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -226,7 +226,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{}},
+					"default": {Sources: []SourceSpec{}},
 				},
 			},
 			wantErr: true,
@@ -239,8 +239,8 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []string{"file.txt"}},
-					"work":     {Sources: []string{}},
+					"personal": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"work":     {Sources: []SourceSpec{}},
 				},
 			},
 			wantErr: true,
@@ -255,7 +255,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"config/file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "config/file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -267,7 +267,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"a/b/c/file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "a/b/c/file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -279,7 +279,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"/etc/config"}},
+					"default": {Sources: []SourceSpec{{Path: "/etc/config"}}},
 				},
 			},
 			wantErr: true,
@@ -292,7 +292,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"../config/file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "../config/file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -305,7 +305,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"a/../b/file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "a/../b/file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -320,7 +320,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file1.txt", "file2.txt", "file3.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file1.txt"}, {Path: "file2.txt"}, {Path: "file3.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -332,7 +332,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt", "file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}, {Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -345,8 +345,8 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []string{"file.txt"}},
-					"work":     {Sources: []string{"file.txt"}},
+					"personal": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"work":     {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -358,7 +358,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"a.txt", "b.txt", "a.txt", "c.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "a.txt"}, {Path: "b.txt"}, {Path: "a.txt"}, {Path: "c.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -374,7 +374,7 @@ func TestValidate(t *testing.T) {
 				SupportedOS:   []string{"linux"},
 				Target:        "$HOME/.config/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -387,7 +387,7 @@ func TestValidate(t *testing.T) {
 				SupportedOS:   []string{"linux"},
 				Target:        "$XDG_CONFIG_HOME/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -400,7 +400,7 @@ func TestValidate(t *testing.T) {
 				SupportedOS:   []string{"windows"},
 				Target:        "%USERPROFILE%/AppData/Local/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -413,7 +413,7 @@ func TestValidate(t *testing.T) {
 				SupportedOS:   []string{"windows"},
 				Target:        "%APPDATA%/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -426,7 +426,7 @@ func TestValidate(t *testing.T) {
 				SupportedOS:   []string{"linux"},
 				Target:        "",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: false,
@@ -439,7 +439,7 @@ func TestValidate(t *testing.T) {
 				SupportedOS:   []string{"linux"},
 				Target:        "/etc/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -453,7 +453,7 @@ func TestValidate(t *testing.T) {
 				SupportedOS:   []string{"linux"},
 				Target:        "config/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []string{"file.txt"}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
 				},
 			},
 			wantErr: true,
@@ -471,8 +471,8 @@ func TestValidate(t *testing.T) {
 				Target:        "$HOME/.config/nvim",
 				ProfileKey:    "nvim_profile",
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []string{"init.lua", "lua/config.lua"}},
-					"work":     {Sources: []string{"init.lua", "lua/work.lua"}},
+					"personal": {Sources: []SourceSpec{{Path: "init.lua"}, {Path: "lua/config.lua"}}},
+					"work":     {Sources: []SourceSpec{{Path: "init.lua"}, {Path: "lua/work.lua"}}},
 				},
 			},
 			wantErr: false,
@@ -487,6 +487,71 @@ func TestValidate(t *testing.T) {
 			},
 			wantErr: true,
 			errMsg:  "unsupported schema_version: 2",
+		},
+
+		// Folder-mode source tests
+		{
+			name: "folder-mode source with target",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "folder", Target: ".config/nvim"}}},
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "folder-mode source missing target",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "folder"}}},
+				},
+			},
+			wantErr: true,
+			errMsg:  "folder-mode requires a non-empty target field",
+		},
+		{
+			name: "unknown mode value",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "symlink"}}},
+				},
+			},
+			wantErr: true,
+			errMsg:  "unknown mode",
+		},
+		{
+			name: "file-mode source with target field set",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file", Target: ".config"}}},
+				},
+			},
+			wantErr: true,
+			errMsg:  "target field is only valid for folder-mode",
+		},
+		{
+			name: "table-form source with mode=file and no target",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file"}}},
+				},
+			},
+			wantErr: false,
 		},
 	}
 

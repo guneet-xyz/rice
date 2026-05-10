@@ -43,8 +43,8 @@ func TestLoad_HappyPath(t *testing.T) {
 	assert.Len(t, m.Profiles, 2)
 	assert.Contains(t, m.Profiles, "linux")
 	assert.Contains(t, m.Profiles, "darwin")
-	assert.Equal(t, []string{"common", "linux"}, m.Profiles["linux"].Sources)
-	assert.Equal(t, []string{"common", "darwin"}, m.Profiles["darwin"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "linux", Mode: "file"}}, m.Profiles["linux"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "darwin", Mode: "file"}}, m.Profiles["darwin"].Sources)
 }
 
 func TestLoad_FileNotFound(t *testing.T) {
@@ -173,6 +173,6 @@ func TestDiscover_MultiProfileManifest(t *testing.T) {
 	assert.Equal(t, "ghostty", ghosttyManifest.Name)
 	assert.Equal(t, "machine", ghosttyManifest.ProfileKey)
 	assert.Len(t, ghosttyManifest.Profiles, 2)
-	assert.Equal(t, []string{"common", "macbook"}, ghosttyManifest.Profiles["macbook"].Sources)
-	assert.Equal(t, []string{"common", "devstick"}, ghosttyManifest.Profiles["devstick"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "macbook", Mode: "file"}}, ghosttyManifest.Profiles["macbook"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "devstick", Mode: "file"}}, ghosttyManifest.Profiles["devstick"].Sources)
 }

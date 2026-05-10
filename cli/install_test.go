@@ -13,6 +13,41 @@ import (
 	"github.com/guneet/rice/internal/state"
 )
 
+func setupFolderTestRepo(t *testing.T) (repoRoot, statePath, homeDir string) {
+	t.Helper()
+	root := t.TempDir()
+	repoRoot = filepath.Join(root, "repo")
+	homeDir = filepath.Join(root, "home")
+	statePath = filepath.Join(root, "state.json")
+
+	require.NoError(t, os.MkdirAll(homeDir, 0o755))
+
+	pkgDir := filepath.Join(repoRoot, "folderpkg")
+	require.NoError(t, os.MkdirAll(filepath.Join(pkgDir, "cfg"), 0o755))
+	require.NoError(t, os.WriteFile(
+		filepath.Join(pkgDir, "cfg", "init.conf"),
+		[]byte("k=v\n"), 0o644))
+
+	manifest := `schema_version = 1
+name = "folderpkg"
+description = "Folder-mode test package"
+supported_os = ["linux", "darwin", "windows"]
+target = "$HOME"
+
+[profiles.common]
+sources = [{path = "cfg", mode = "folder", target = ".config/folderpkg"}]
+
+[profiles.filemode]
+sources = ["cfg"]
+`
+	require.NoError(t, os.WriteFile(
+		filepath.Join(pkgDir, "rice.toml"), []byte(manifest), 0o644))
+
+	t.Setenv("HOME", homeDir)
+	t.Setenv("USERPROFILE", homeDir)
+	return
+}
+
 func resetInstallFlags() {
 	flagProfile = ""
 	flagYes = false
@@ -171,4 +206,36 @@ func TestInstall_WithProfileFlag(t *testing.T) {
 		_, err := os.Lstat(filepath.Join(homeDir, rel))
 		assert.NoError(t, err, "expected symlink %s", rel)
 	}
+}
+
+func TestInstall_FolderMode_CreatesSingleSymlink(t *testing.T) {
+	resetInstallFlags()
+	repoRoot, statePath, homeDir := setupFolderTestRepo(t)
+
+	out, err := runInstallCmd(t, "",
+		"--repo", repoRoot,
+		"--state", statePath,
+		"--yes",
+		"install", "folderpkg",
+		"--profile", "common",
+	)
+	require.NoError(t, err, "out=%s", out)
+
+	target := filepath.Join(homeDir, ".config", "folderpkg")
+	fi, err := os.Lstat(target)
+	require.NoError(t, err)
+	assert.NotZero(t, fi.Mode()&os.ModeSymlink, "expected symlink at %s", target)
+
+	wantSrc, err := filepath.Abs(filepath.Join(repoRoot, "folderpkg", "cfg"))
+	require.NoError(t, err)
+	got, err := os.Readlink(target)
+	require.NoError(t, err)
+	assert.Equal(t, wantSrc, got, "symlink should point to source dir")
+
+	st, err := state.Load(statePath)
+	require.NoError(t, err)
+	pkg, ok := st["folderpkg"]
+	require.True(t, ok, "folderpkg missing from state")
+	require.Len(t, pkg.InstalledLinks, 1)
+	assert.True(t, pkg.InstalledLinks[0].IsDir, "InstalledLinks[0].IsDir should be true")
 }

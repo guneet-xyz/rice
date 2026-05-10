@@ -11,6 +11,7 @@ type Conflict struct {
 	Target string // the path that would be the symlink
 	Source string // the intended symlink source
 	Reason string // human-readable reason
+	IsDir  bool   // true if the planned link is a directory symlink (folder-mode)
 }
 
 func (c Conflict) Error() string {
@@ -18,9 +19,11 @@ func (c Conflict) Error() string {
 }
 
 // PlannedLink is a (source, target) pair to be created as a symlink.
+// IsDir indicates folder-mode (directory symlink); zero value (false) is file-mode.
 type PlannedLink struct {
 	Source string
 	Target string
+	IsDir  bool
 }
 
 // DetectConflicts checks each planned link for conflicts.
@@ -52,6 +55,7 @@ func DetectConflicts(planned []PlannedLink, ignoreTargets map[string]struct{}) [
 				Target: link.Target,
 				Source: link.Source,
 				Reason: fmt.Sprintf("failed to check target: %v", err),
+				IsDir:  link.IsDir,
 			})
 			continue
 		}
@@ -60,16 +64,22 @@ func DetectConflicts(planned []PlannedLink, ignoreTargets map[string]struct{}) [
 		if fi.Mode()&os.ModeSymlink == 0 {
 			// Not a symlink — it's a regular file or directory
 			if fi.IsDir() {
+				reason := "existing directory"
+				if link.IsDir {
+					reason = "existing directory (folder-mode requires symlink or absent path)"
+				}
 				conflicts = append(conflicts, Conflict{
 					Target: link.Target,
 					Source: link.Source,
-					Reason: "existing directory",
+					Reason: reason,
+					IsDir:  link.IsDir,
 				})
 			} else {
 				conflicts = append(conflicts, Conflict{
 					Target: link.Target,
 					Source: link.Source,
 					Reason: "existing file",
+					IsDir:  link.IsDir,
 				})
 			}
 			continue
@@ -83,6 +93,7 @@ func DetectConflicts(planned []PlannedLink, ignoreTargets map[string]struct{}) [
 				Target: link.Target,
 				Source: link.Source,
 				Reason: fmt.Sprintf("failed to read symlink: %v", err),
+				IsDir:  link.IsDir,
 			})
 			continue
 		}
@@ -99,6 +110,7 @@ func DetectConflicts(planned []PlannedLink, ignoreTargets map[string]struct{}) [
 				Target: link.Target,
 				Source: link.Source,
 				Reason: fmt.Sprintf("failed to read symlink: %v", err),
+				IsDir:  link.IsDir,
 			})
 			continue
 		}
@@ -107,6 +119,7 @@ func DetectConflicts(planned []PlannedLink, ignoreTargets map[string]struct{}) [
 			Target: link.Target,
 			Source: link.Source,
 			Reason: fmt.Sprintf("symlink points to %s", otherDest),
+			IsDir:  link.IsDir,
 		})
 	}
 

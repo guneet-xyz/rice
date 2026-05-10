@@ -135,3 +135,40 @@ func TestSwitch_NotInstalledErrors(t *testing.T) {
 	)
 	require.Error(t, err)
 }
+
+func TestSwitch_FolderModeToFileMode(t *testing.T) {
+	resetInstallFlags()
+	repoRoot, statePath, homeDir := setupFolderTestRepo(t)
+
+	out, err := runInstallCmd(t, "",
+		"--repo", repoRoot,
+		"--state", statePath,
+		"--yes",
+		"install", "folderpkg",
+		"--profile", "common",
+	)
+	require.NoError(t, err, "install profile A failed: out=%s", out)
+
+	folderTarget := filepath.Join(homeDir, ".config", "folderpkg")
+	fi, err := os.Lstat(folderTarget)
+	require.NoError(t, err)
+	require.NotZero(t, fi.Mode()&os.ModeSymlink, "precondition: profile A should be folder symlink")
+
+	resetInstallFlags()
+	out, err = runInstallCmd(t, "",
+		"--repo", repoRoot,
+		"--state", statePath,
+		"--yes",
+		"switch", "folderpkg", "filemode",
+	)
+	require.NoError(t, err, "switch failed: out=%s", out)
+
+	_, err = os.Lstat(folderTarget)
+	assert.True(t, os.IsNotExist(err), "folder symlink should be gone after switch; err=%v", err)
+
+	fileLink := filepath.Join(homeDir, "init.conf")
+	fi, err = os.Lstat(fileLink)
+	require.NoError(t, err, "expected individual file symlink at %s", fileLink)
+	assert.NotZero(t, fi.Mode()&os.ModeSymlink, "expected file symlink (not folder)")
+	assert.False(t, fi.IsDir(), "should be a file symlink, not a directory")
+}

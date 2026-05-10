@@ -91,7 +91,7 @@ func BuildSwitchPlan(req SwitchRequest) (*SwitchPlan, error) {
 		if op.Kind != plan.OpCreate {
 			continue
 		}
-		planned = append(planned, PlannedLink{Source: op.Source, Target: op.Target})
+		planned = append(planned, PlannedLink{Source: op.Source, Target: op.Target, IsDir: op.IsDir})
 	}
 	conflicts := DetectConflicts(planned, ignoreTargets)
 
@@ -101,6 +101,7 @@ func BuildSwitchPlan(req SwitchRequest) (*SwitchPlan, error) {
 			Target: c.Target,
 			Source: c.Source,
 			Reason: c.Reason,
+			IsDir:  c.IsDir,
 		})
 	}
 

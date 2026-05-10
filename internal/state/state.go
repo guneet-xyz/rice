@@ -10,8 +10,9 @@ import (
 
 // InstalledLink represents a single symlink installed by rice.
 type InstalledLink struct {
-	Source string `json:"source"` // absolute path to the file in the rice repo
-	Target string `json:"target"` // absolute path to the symlink in $HOME
+	Source string `json:"source"`           // absolute path to the file in the rice repo
+	Target string `json:"target"`           // absolute path to the symlink in $HOME
+	IsDir  bool   `json:"is_dir,omitempty"` // true if the source is a directory
 }
 
 // PackageState represents the state of a single installed package.

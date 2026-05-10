@@ -55,9 +55,17 @@ func RenderPlan(w io.Writer, p *plan.Plan) {
 		tw := tabwriter.NewWriter(w, 0, 0, 2, ' ', 0)
 		for _, op := range p.Ops {
 			if op.Kind == plan.OpCreate {
-				fmt.Fprintf(tw, "  CREATE\t%s\t→\t%s\n", op.Target, op.Source)
+				label := "CREATE"
+				if op.IsDir {
+					label = "CREATE-DIR"
+				}
+				fmt.Fprintf(tw, "  %s\t%s\t→\t%s\n", label, op.Target, op.Source)
 			} else {
-				fmt.Fprintf(tw, "  REMOVE\t%s\n", op.Target)
+				label := "REMOVE"
+				if op.IsDir {
+					label = "REMOVE-DIR"
+				}
+				fmt.Fprintf(tw, "  %s\t%s\n", label, op.Target)
 			}
 		}
 		tw.Flush()
@@ -89,7 +97,11 @@ func RenderSwitchPlan(w io.Writer, uninstall *plan.Plan, install *plan.Plan) {
 	if len(uninstall.Ops) > 0 {
 		tw := tabwriter.NewWriter(w, 0, 0, 2, ' ', 0)
 		for _, op := range uninstall.Ops {
-			fmt.Fprintf(tw, "  REMOVE\t%s\n", op.Target)
+			label := "REMOVE"
+			if op.IsDir {
+				label = "REMOVE-DIR"
+			}
+			fmt.Fprintf(tw, "  %s\t%s\n", label, op.Target)
 		}
 		tw.Flush()
 	}
@@ -99,7 +111,11 @@ func RenderSwitchPlan(w io.Writer, uninstall *plan.Plan, install *plan.Plan) {
 	if len(install.Ops) > 0 {
 		tw := tabwriter.NewWriter(w, 0, 0, 2, ' ', 0)
 		for _, op := range install.Ops {
-			fmt.Fprintf(tw, "  CREATE\t%s\t→\t%s\n", op.Target, op.Source)
+			label := "CREATE"
+			if op.IsDir {
+				label = "CREATE-DIR"
+			}
+			fmt.Fprintf(tw, "  %s\t%s\t→\t%s\n", label, op.Target, op.Source)
 		}
 		tw.Flush()
 	}
@@ -120,7 +136,11 @@ func RenderSwitchPlan(w io.Writer, uninstall *plan.Plan, install *plan.Plan) {
 //	CONFLICT  <target>: <reason>
 func RenderConflicts(w io.Writer, conflicts []plan.Conflict) {
 	for _, c := range conflicts {
-		fmt.Fprintf(w, "CONFLICT  %s: %s\n", c.Target, c.Reason)
+		reason := c.Reason
+		if c.IsDir {
+			reason = reason + " (directory)"
+		}
+		fmt.Fprintf(w, "CONFLICT  %s: %s\n", c.Target, reason)
 	}
 }
 

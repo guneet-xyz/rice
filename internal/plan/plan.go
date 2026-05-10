@@ -13,6 +13,7 @@ type Op struct {
 	Kind   OpKind
 	Source string // source file in rice repo (empty for OpRemove)
 	Target string // symlink path in $HOME
+	IsDir  bool   // true if target is a directory symlink, false for file symlink
 }
 
 // Conflict describes a target path that cannot be created.
@@ -20,6 +21,7 @@ type Conflict struct {
 	Target string
 	Source string
 	Reason string
+	IsDir  bool // true if conflict is for a directory symlink, false for file symlink
 }
 
 // Plan describes a set of operations to be performed for one package.

@@ -1,0 +1,8 @@
+schema_version = 1
+name = "folder-pkg"
+description = "Folder-mode test fixture"
+supported_os = ["linux", "darwin", "windows"]
+target = "$HOME"
+
+[profiles.common]
+sources = [{path = "cfg", mode = "folder", target = ".config/myfolder"}]

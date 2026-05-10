@@ -77,9 +77,23 @@ sources = ["common", "devstick"]
 | `target`          | string              | yes      | Destination root. Usually `"$HOME"`. Env vars are expanded.      |
 | `profile_key`     | string              | no       | Reserved for future per-package profile overrides.               |
 | `profiles.<name>` | table               | yes      | One or more profiles. At least `common` is conventional.         |
-| `profiles.<name>.sources` | []string    | yes      | Ordered list of subdirs under the package. Later wins on conflict. |
+| `profiles.<name>.sources` | []string or []table | yes      | Ordered list of sources: strings (subdirs) or tables (folder-mode). See "Folder-mode sources" below. |
 
 `sources` are relative to the package directory. `["common", "macbook"]` means: take everything under `common/`, then overlay everything under `macbook/`.
+
+## Folder-mode sources
+
+For tools that require their config directory to be a single symlink (not overlaid), use folder-mode:
+
+```toml
+[profiles.common]
+sources = [{path = ".config/nvim", mode = "folder", target = ".config/nvim"}]
+```
+
+This symlinks `<repo>/nvim/.config/nvim` as a single unit to `~/.config/nvim`. Folder-mode sources:
+- Cannot be overlaid by other sources in the same profile
+- Require both `path` (relative to package dir) and `target` (relative to `target` root)
+- Are ideal for tools like nvim, opencode that manage their entire config directory
 
 ## Profile Conventions
 

@@ -2,6 +2,7 @@ package installer
 
 import (
 	"fmt"
+	"os"
 
 	"go.uber.org/zap"
 
@@ -87,7 +88,7 @@ func ExecuteUninstallPlan(p *plan.Plan, statePath string) error {
 			continue
 		}
 
-		// Find the corresponding InstalledLink to get Source
+		// Find the corresponding InstalledLink to get Source and IsDir
 		pkgState, ok := s[p.PackageName]
 		if !ok {
 			// Package already removed from state (shouldn't happen, but be defensive)
@@ -100,10 +101,35 @@ func ExecuteUninstallPlan(p *plan.Plan, statePath string) error {
 		}
 
 		var source string
+		var isDir bool
 		for _, link := range pkgState.InstalledLinks {
 			if link.Target == op.Target {
 				source = link.Source
+				isDir = link.IsDir
 				break
+			}
+		}
+
+		// Safety check for folder symlinks: verify target is still a symlink
+		if isDir {
+			fi, err := os.Lstat(op.Target)
+			if err != nil {
+				// Error checking symlink (permission denied, etc.)
+				logger.Warn("failed to check symlink",
+					zap.String("target", op.Target),
+					zap.Error(err),
+				)
+				skipped++
+				continue
+			}
+
+			// If it's NOT a symlink (i.e., replaced with a real directory), skip
+			if fi.Mode()&os.ModeSymlink == 0 {
+				logger.Warn("folder symlink replaced with real directory, skipping removal",
+					zap.String("target", op.Target),
+				)
+				skipped++
+				continue
 			}
 		}
 

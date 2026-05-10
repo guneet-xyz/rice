@@ -24,7 +24,7 @@ func TestResolve(t *testing.T) {
 				Name: "nvim",
 				Profiles: map[string]manifest.ProfileDef{
 					"default": {
-						Sources: []string{"."},
+						Sources: []manifest.SourceSpec{{Path: "."}},
 					},
 				},
 			},
@@ -38,7 +38,7 @@ func TestResolve(t *testing.T) {
 				Name: "ghostty",
 				Profiles: map[string]manifest.ProfileDef{
 					"macbook": {
-						Sources: []string{"common", "macbook"},
+						Sources: []manifest.SourceSpec{{Path: "common"}, {Path: "macbook"}},
 					},
 				},
 			},
@@ -52,10 +52,10 @@ func TestResolve(t *testing.T) {
 				Name: "nvim",
 				Profiles: map[string]manifest.ProfileDef{
 					"default": {
-						Sources: []string{"."},
+						Sources: []manifest.SourceSpec{{Path: "."}},
 					},
 					"minimal": {
-						Sources: []string{"minimal"},
+						Sources: []manifest.SourceSpec{{Path: "minimal"}},
 					},
 				},
 			},
@@ -81,7 +81,7 @@ func TestResolve(t *testing.T) {
 				Name: "zsh",
 				Profiles: map[string]manifest.ProfileDef{
 					"work": {
-						Sources: []string{"base", "work", "secrets"},
+						Sources: []manifest.SourceSpec{{Path: "base"}, {Path: "work"}, {Path: "secrets"}},
 					},
 				},
 			},
