@@ -1,0 +1,8 @@
+schema_version = 1
+name = "waybar"
+description = "Waybar status bar configuration"
+supported_os = ["linux"]
+target = "$HOME"
+
+[profiles.common]
+sources = ["."]

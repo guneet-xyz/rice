@@ -1,0 +1,8 @@
+schema_version = 1
+name = "nvim"
+description = "Neovim configuration"
+supported_os = ["linux", "darwin"]
+target = "$HOME"
+
+[profiles.common]
+sources = ["."]

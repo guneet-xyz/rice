@@ -1,0 +1,8 @@
+schema_version = 1
+name = "hyprland"
+description = "Hyprland wayland compositor configuration"
+supported_os = ["linux"]
+target = "$HOME"
+
+[profiles.common]
+sources = ["."]
