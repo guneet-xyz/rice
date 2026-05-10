@@ -34,18 +34,6 @@ type InstallResult struct {
 	LinksCreated []state.InstalledLink
 }
 
-// expandHome replaces leading $HOME or %USERPROFILE% in target with home.
-// Returns the path unchanged if no placeholder is present.
-func expandHome(target, home string) string {
-	if strings.HasPrefix(target, "$HOME") {
-		return filepath.Join(home, strings.TrimPrefix(target, "$HOME"))
-	}
-	if strings.HasPrefix(target, "%USERPROFILE%") {
-		return filepath.Join(home, strings.TrimPrefix(target, "%USERPROFILE%"))
-	}
-	return target
-}
-
 // withinHome reports whether target is contained in home (defense in depth).
 func withinHome(target, home string) bool {
 	absHome, err := filepath.Abs(home)
@@ -99,12 +87,6 @@ func BuildInstallPlan(req InstallRequest) (*plan.Plan, error) {
 		return nil, err
 	}
 
-	// Determine target root (default to HomeDir if Target empty)
-	targetRoot := req.HomeDir
-	if t := strings.TrimSpace(m.Target); t != "" {
-		targetRoot = expandHome(t, req.HomeDir)
-	}
-
 	sourcePaths := make([]string, len(specs))
 	for i, s := range specs {
 		sourcePaths[i] = s.Path
@@ -151,7 +133,7 @@ func BuildInstallPlan(req InstallRequest) (*plan.Plan, error) {
 			if err != nil {
 				return nil, fmt.Errorf("failed to abs source dir %q: %w", sourceDir, err)
 			}
-			target := filepath.Join(targetRoot, spec.Target)
+			target := os.ExpandEnv(spec.Target)
 			if !withinHome(target, req.HomeDir) {
 				return nil, fmt.Errorf("target %q escapes home directory %q", target, req.HomeDir)
 			}
@@ -189,7 +171,8 @@ func BuildInstallPlan(req InstallRequest) (*plan.Plan, error) {
 				return fmt.Errorf("failed to compute relative path: %w", err)
 			}
 
-			target := filepath.Join(targetRoot, rel)
+			sourceTarget := os.ExpandEnv(spec.Target)
+			target := filepath.Join(sourceTarget, rel)
 
 			// Defense in depth: ensure target is within HomeDir
 			if !withinHome(target, req.HomeDir) {

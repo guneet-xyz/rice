@@ -2,7 +2,6 @@ schema_version = 1
 name = "nvim"
 description = "Neovim configuration"
 supported_os = ["linux", "darwin"]
-target = "$HOME"
 
 [profiles.common]
-sources = [{path = ".config/nvim", mode = "folder", target = ".config/nvim"}]
+sources = [{path = ".config/nvim", mode = "folder", target = "$HOME/.config/nvim"}]

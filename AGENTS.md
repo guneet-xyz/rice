@@ -54,16 +54,15 @@ schema_version = 1
 name = "ghostty"
 description = "Ghostty terminal emulator configuration"
 supported_os = ["linux", "darwin"]
-target = "$HOME"
 
 [profiles.common]
-sources = ["common"]
+sources = [{path = "common", mode = "file", target = "$HOME"}]
 
 [profiles.macbook]
-sources = ["common", "macbook"]
-
-[profiles.devstick]
-sources = ["common", "devstick"]
+sources = [
+  {path = "common", mode = "file", target = "$HOME"},
+  {path = "macbook", mode = "file", target = "$HOME"},
+]
 ```
 
 ### Fields
@@ -74,26 +73,42 @@ sources = ["common", "devstick"]
 | `name`            | string              | yes      | Package name. Should match the directory name.                   |
 | `description`     | string              | no       | Short human-readable description.                                |
 | `supported_os`    | []string            | yes      | OS gate at package level. Values: `linux`, `darwin`, `windows`.  |
-| `target`          | string              | yes      | Destination root. Usually `"$HOME"`. Env vars are expanded.      |
 | `profile_key`     | string              | no       | Reserved for future per-package profile overrides.               |
 | `profiles.<name>` | table               | yes      | One or more profiles. At least `common` is conventional.         |
-| `profiles.<name>.sources` | []string or []table | yes      | Ordered list of sources: strings (subdirs) or tables (folder-mode). See "Folder-mode sources" below. |
+| `profiles.<name>.sources` | []table | yes      | List of source tables. Each entry requires `path` (relative subdir), `mode` (`"file"` or `"folder"`), and `target` (absolute destination root, env vars expanded). |
 
-`sources` are relative to the package directory. `["common", "macbook"]` means: take everything under `common/`, then overlay everything under `macbook/`.
+`sources` are relative to the package directory. Each source table specifies how files are installed.
 
-## Folder-mode sources
+## Source Spec
 
-For tools that require their config directory to be a single symlink (not overlaid), use folder-mode:
+Each source entry in the `sources` list is a table with three required fields:
+
+- **`path`**: Relative path to the source directory within the package (e.g., `"common"`, `".config/nvim"`).
+- **`mode`**: Installation mode:
+  - `"file"`: Walk the source directory and symlink each file individually under `target`. Files from multiple sources are overlaid.
+  - `"folder"`: Symlink the entire source directory as a single unit to `target`. Cannot be overlaid by other sources in the same profile.
+- **`target`**: Absolute destination root where files are installed. Supports environment variable expansion (e.g., `"$HOME"`, `"$HOME/.config"`).
+
+### File-mode example (default, overlayable):
 
 ```toml
 [profiles.common]
-sources = [{path = ".config/nvim", mode = "folder", target = ".config/nvim"}]
+sources = [
+  {path = "common", mode = "file", target = "$HOME"},
+  {path = "macbook", mode = "file", target = "$HOME"},
+]
 ```
 
-This symlinks `<repo>/nvim/.config/nvim` as a single unit to `~/.config/nvim`. Folder-mode sources:
-- Cannot be overlaid by other sources in the same profile
-- Require both `path` (relative to package dir) and `target` (relative to `target` root)
-- Are ideal for tools like nvim, opencode that manage their entire config directory
+This installs files from `common/` and `macbook/` into `$HOME`, with `macbook/` overlaying `common/`.
+
+### Folder-mode example (single symlink, not overlayable):
+
+```toml
+[profiles.common]
+sources = [{path = ".config/nvim", mode = "folder", target = "$HOME/.config/nvim"}]
+```
+
+This symlinks `<repo>/nvim/.config/nvim` as a single unit to `$HOME/.config/nvim`. Folder-mode sources are ideal for tools like nvim and opencode that manage their entire config directory.
 
 ## Profile Conventions
 
@@ -222,13 +237,15 @@ go test -race ./internal/installer/...
    name = "mytool"
    description = "My new tool"
    supported_os = ["linux", "darwin"]
-   target = "$HOME"
 
    [profiles.common]
-   sources = ["common"]
+   sources = [{path = "common", mode = "file", target = "$HOME"}]
 
    [profiles.macbook]
-   sources = ["common", "macbook"]
+   sources = [
+     {path = "common", mode = "file", target = "$HOME"},
+     {path = "macbook", mode = "file", target = "$HOME"},
+   ]
    ```
 
 4. Test the install in dry-run-ish fashion against a temp `$HOME`:

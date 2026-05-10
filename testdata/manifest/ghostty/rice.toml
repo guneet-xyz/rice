@@ -2,11 +2,10 @@ schema_version = 1
 name = "ghostty"
 description = "Ghostty terminal configuration"
 supported_os = ["linux", "darwin", "windows"]
-target = "$HOME/.config/ghostty"
 profile_key = "machine"
 
 [profiles.macbook]
-sources = ["common", "macbook"]
+sources = [{path = "common", mode = "file", target = "$HOME/.config/ghostty"}, {path = "macbook", mode = "file", target = "$HOME/.config/ghostty"}]
 
 [profiles.devstick]
-sources = ["common", "devstick"]
+sources = [{path = "common", mode = "file", target = "$HOME/.config/ghostty"}, {path = "devstick", mode = "file", target = "$HOME/.config/ghostty"}]

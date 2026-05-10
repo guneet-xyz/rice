@@ -21,7 +21,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -33,7 +33,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -46,7 +46,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -61,7 +61,7 @@ func TestValidate(t *testing.T) {
 				Name:          "mypackage",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -73,7 +73,7 @@ func TestValidate(t *testing.T) {
 				Name:          "",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -86,7 +86,7 @@ func TestValidate(t *testing.T) {
 				Name:          "   ",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -101,7 +101,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -113,7 +113,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"darwin"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -125,7 +125,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"windows"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -137,7 +137,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux", "darwin", "windows"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -149,7 +149,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -162,7 +162,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"freebsd"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -175,7 +175,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux", "macos"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -190,7 +190,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -202,8 +202,8 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []SourceSpec{{Path: "file1.txt"}}},
-					"work":     {Sources: []SourceSpec{{Path: "file2.txt"}}},
+					"personal": {Sources: []SourceSpec{{Path: "file1.txt", Mode: "file", Target: "$HOME"}}},
+					"work":     {Sources: []SourceSpec{{Path: "file2.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -239,7 +239,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"personal": {Sources: []SourceSpec{{Path: "file.txt", Mode: "file", Target: "$HOME"}}},
 					"work":     {Sources: []SourceSpec{}},
 				},
 			},
@@ -255,7 +255,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "config/file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "config/file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -267,7 +267,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "a/b/c/file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "a/b/c/file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: false,
@@ -279,7 +279,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "/etc/config"}}},
+					"default": {Sources: []SourceSpec{{Path: "/etc/config", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -292,7 +292,7 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "../config/file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "../config/file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
@@ -305,155 +305,98 @@ func TestValidate(t *testing.T) {
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "a/../b/file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "a/../b/file.txt", Mode: "file", Target: "$HOME"}}},
 				},
 			},
 			wantErr: true,
 			errMsg:  "must not contain .. segments",
 		},
 
-		// Rule 6: Sources within a single profile must be unique
+		// Source mode and target tests
 		{
-			name: "valid unique sources",
+			name: "folder-mode source with valid target",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file1.txt"}, {Path: "file2.txt"}, {Path: "file3.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "folder", Target: "$HOME/.config/nvim"}}},
 				},
 			},
 			wantErr: false,
 		},
 		{
-			name: "duplicate sources in same profile",
+			name: "folder-mode source missing target",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}, {Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "folder"}}},
 				},
 			},
 			wantErr: true,
-			errMsg:  "has duplicate source",
+			errMsg:  "target is required",
 		},
 		{
-			name: "duplicate sources with different profiles allowed",
+			name: "file-mode source with valid target",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []SourceSpec{{Path: "file.txt"}}},
-					"work":     {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file", Target: "$HOME/.config"}}},
 				},
 			},
 			wantErr: false,
 		},
 		{
-			name: "multiple duplicates in same profile",
+			name: "file-mode source missing target",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "a.txt"}, {Path: "b.txt"}, {Path: "a.txt"}, {Path: "c.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file"}}},
 				},
 			},
 			wantErr: true,
-			errMsg:  "has duplicate source",
+			errMsg:  "target is required",
 		},
-
-		// Rule 7: Target (if set) must start with $HOME, $XDG_CONFIG_HOME, %USERPROFILE%, or %APPDATA%
 		{
-			name: "valid target with $HOME",
+			name: "empty mode is invalid",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
-				Target:        "$HOME/.config/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
-				},
-			},
-			wantErr: false,
-		},
-		{
-			name: "valid target with $XDG_CONFIG_HOME",
-			manifest: &Manifest{
-				SchemaVersion: 1,
-				Name:          "test",
-				SupportedOS:   []string{"linux"},
-				Target:        "$XDG_CONFIG_HOME/myapp",
-				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
-				},
-			},
-			wantErr: false,
-		},
-		{
-			name: "valid target with %USERPROFILE%",
-			manifest: &Manifest{
-				SchemaVersion: 1,
-				Name:          "test",
-				SupportedOS:   []string{"windows"},
-				Target:        "%USERPROFILE%/AppData/Local/myapp",
-				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
-				},
-			},
-			wantErr: false,
-		},
-		{
-			name: "valid target with %APPDATA%",
-			manifest: &Manifest{
-				SchemaVersion: 1,
-				Name:          "test",
-				SupportedOS:   []string{"windows"},
-				Target:        "%APPDATA%/myapp",
-				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
-				},
-			},
-			wantErr: false,
-		},
-		{
-			name: "empty target is valid",
-			manifest: &Manifest{
-				SchemaVersion: 1,
-				Name:          "test",
-				SupportedOS:   []string{"linux"},
-				Target:        "",
-				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
-				},
-			},
-			wantErr: false,
-		},
-		{
-			name: "invalid target with /etc",
-			manifest: &Manifest{
-				SchemaVersion: 1,
-				Name:          "test",
-				SupportedOS:   []string{"linux"},
-				Target:        "/etc/myapp",
-				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "", Target: "$HOME/.config"}}},
 				},
 			},
 			wantErr: true,
-			errMsg:  "must start with one of",
+			errMsg:  "mode must be \"file\" or \"folder\"",
 		},
 		{
-			name: "invalid target with relative path",
+			name: "unknown mode value",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
-				Target:        "config/myapp",
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "file.txt"}}},
+					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "symlink"}}},
+				},
+			},
+			wantErr: true,
+			errMsg:  "mode must be \"file\" or \"folder\"",
+		},
+		{
+			name: "source target with invalid prefix",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file", Target: "/etc/config"}}},
 				},
 			},
 			wantErr: true,
@@ -468,11 +411,10 @@ func TestValidate(t *testing.T) {
 				Name:          "nvim",
 				Description:   "Neovim configuration",
 				SupportedOS:   []string{"linux", "darwin"},
-				Target:        "$HOME/.config/nvim",
 				ProfileKey:    "nvim_profile",
 				Profiles: map[string]ProfileDef{
-					"personal": {Sources: []SourceSpec{{Path: "init.lua"}, {Path: "lua/config.lua"}}},
-					"work":     {Sources: []SourceSpec{{Path: "init.lua"}, {Path: "lua/work.lua"}}},
+					"personal": {Sources: []SourceSpec{{Path: "init.lua", Mode: "file", Target: "$HOME/.config/nvim"}, {Path: "lua/config.lua", Mode: "file", Target: "$HOME/.config/nvim"}}},
+					"work":     {Sources: []SourceSpec{{Path: "init.lua", Mode: "file", Target: "$HOME/.config/nvim"}, {Path: "lua/work.lua", Mode: "file", Target: "$HOME/.config/nvim"}}},
 				},
 			},
 			wantErr: false,
@@ -489,15 +431,15 @@ func TestValidate(t *testing.T) {
 			errMsg:  "unsupported schema_version: 2",
 		},
 
-		// Folder-mode source tests
+		// Source mode and target tests
 		{
-			name: "folder-mode source with target",
+			name: "folder-mode source with valid target",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "folder", Target: ".config/nvim"}}},
+					"default": {Sources: []SourceSpec{{Path: "nvim", Mode: "folder", Target: "$HOME/.config/nvim"}}},
 				},
 			},
 			wantErr: false,
@@ -513,7 +455,45 @@ func TestValidate(t *testing.T) {
 				},
 			},
 			wantErr: true,
-			errMsg:  "folder-mode requires a non-empty target field",
+			errMsg:  "target is required",
+		},
+		{
+			name: "file-mode source with valid target",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file", Target: "$HOME/.config"}}},
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "file-mode source missing target",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file"}}},
+				},
+			},
+			wantErr: true,
+			errMsg:  "target is required",
+		},
+		{
+			name: "empty mode is invalid",
+			manifest: &Manifest{
+				SchemaVersion: 1,
+				Name:          "test",
+				SupportedOS:   []string{"linux"},
+				Profiles: map[string]ProfileDef{
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "", Target: "$HOME/.config"}}},
+				},
+			},
+			wantErr: true,
+			errMsg:  "mode must be \"file\" or \"folder\"",
 		},
 		{
 			name: "unknown mode value",
@@ -526,32 +506,20 @@ func TestValidate(t *testing.T) {
 				},
 			},
 			wantErr: true,
-			errMsg:  "unknown mode",
+			errMsg:  "mode must be \"file\" or \"folder\"",
 		},
 		{
-			name: "file-mode source with target field set",
+			name: "source target with invalid prefix",
 			manifest: &Manifest{
 				SchemaVersion: 1,
 				Name:          "test",
 				SupportedOS:   []string{"linux"},
 				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file", Target: ".config"}}},
+					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file", Target: "/etc/config"}}},
 				},
 			},
 			wantErr: true,
-			errMsg:  "target field is only valid for folder-mode",
-		},
-		{
-			name: "table-form source with mode=file and no target",
-			manifest: &Manifest{
-				SchemaVersion: 1,
-				Name:          "test",
-				SupportedOS:   []string{"linux"},
-				Profiles: map[string]ProfileDef{
-					"default": {Sources: []SourceSpec{{Path: "config.txt", Mode: "file"}}},
-				},
-			},
-			wantErr: false,
+			errMsg:  "must start with one of",
 		},
 	}
 

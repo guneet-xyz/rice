@@ -23,6 +23,8 @@ func newFolderRequest(t *testing.T, repoRoot, pkg, profile string) InstallReques
 	t.Helper()
 	homeDir := t.TempDir()
 	statePath := filepath.Join(t.TempDir(), "state.json")
+	t.Setenv("HOME", homeDir)
+	t.Setenv("USERPROFILE", homeDir)
 	return InstallRequest{
 		RepoRoot:    repoRoot,
 		PackageName: pkg,

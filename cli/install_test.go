@@ -32,13 +32,12 @@ func setupFolderTestRepo(t *testing.T) (repoRoot, statePath, homeDir string) {
 name = "folderpkg"
 description = "Folder-mode test package"
 supported_os = ["linux", "darwin", "windows"]
-target = "$HOME"
 
 [profiles.common]
-sources = [{path = "cfg", mode = "folder", target = ".config/folderpkg"}]
+sources = [{path = "cfg", mode = "folder", target = "$HOME/.config/folderpkg"}]
 
 [profiles.filemode]
-sources = ["cfg"]
+sources = [{path = "cfg", mode = "file", target = "$HOME"}]
 `
 	require.NoError(t, os.WriteFile(
 		filepath.Join(pkgDir, "rice.toml"), []byte(manifest), 0o644))
@@ -73,13 +72,15 @@ func setupTestRepo(t *testing.T) (repoRoot, statePath, homeDir string) {
 name = "mypkg"
 description = "Test package"
 supported_os = ["linux", "darwin", "windows"]
-target = "$HOME"
 
 [profiles.common]
-sources = ["common"]
+sources = [{path = "common", mode = "file", target = "$HOME"}]
 
 [profiles.macbook]
-sources = ["common", "macbook"]
+sources = [
+  {path = "common", mode = "file", target = "$HOME"},
+  {path = "macbook", mode = "file", target = "$HOME"},
+]
 `
 	require.NoError(t, os.WriteFile(filepath.Join(pkgDir, "rice.toml"), []byte(manifest), 0o644))
 	require.NoError(t, os.WriteFile(filepath.Join(pkgDir, "common", ".config", "mypkg", "base.toml"), []byte("base=true\n"), 0o644))

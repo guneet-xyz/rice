@@ -8,7 +8,6 @@ type Manifest struct {
 	Name          string                `toml:"name"`
 	Description   string                `toml:"description"`
 	SupportedOS   []string              `toml:"supported_os"`
-	Target        string                `toml:"target"`
 	ProfileKey    string                `toml:"profile_key"`
 	Profiles      map[string]ProfileDef `toml:"profiles"`
 }
@@ -18,19 +17,16 @@ type ProfileDef struct {
 	Sources []SourceSpec `toml:"sources"`
 }
 
-// SourceSpec describes a single source entry under a profile. It accepts two
-// TOML forms:
+// SourceSpec describes a single source entry under a profile. It accepts only
+// the inline table form:
 //
-//  1. Bare string  : sources = ["common", "macbook"]
-//     -> SourceSpec{Path: "common", Mode: "file"}
+//	sources = [{path = "foo", mode = "folder", target = ".config/nvim"}]
+//	-> SourceSpec{Path: "foo", Mode: "folder", Target: ".config/nvim"}
 //
-//  2. Inline table : sources = [{path = "foo", mode = "folder", target = ".config/nvim"}]
-//     -> SourceSpec{Path: "foo", Mode: "folder", Target: ".config/nvim"}
-//
-// Mode defaults to "file" when omitted. "folder" mode opts the entire source
-// directory into being symlinked as a single directory link rather than walked
-// file-by-file; in that case Target is required and is interpreted relative to
-// the package's Target.
+// All three fields (path, mode, target) are required. "folder" mode opts the
+// entire source directory into being symlinked as a single directory link rather
+// than walked file-by-file; in that case Target is interpreted relative to the
+// package's target root.
 type SourceSpec struct {
 	Path   string `toml:"path"`
 	Mode   string `toml:"mode"`
@@ -38,14 +34,9 @@ type SourceSpec struct {
 }
 
 // UnmarshalTOML implements the toml.Unmarshaler interface from
-// github.com/BurntSushi/toml. It accepts either a bare string or a table.
+// github.com/BurntSushi/toml. It accepts only the table form.
 func (s *SourceSpec) UnmarshalTOML(data interface{}) error {
 	switch v := data.(type) {
-	case string:
-		s.Path = v
-		s.Mode = "file"
-		s.Target = ""
-		return nil
 	case map[string]interface{}:
 		if raw, ok := v["path"]; ok {
 			str, ok := raw.(string)
@@ -68,11 +59,8 @@ func (s *SourceSpec) UnmarshalTOML(data interface{}) error {
 			}
 			s.Target = str
 		}
-		if s.Mode == "" {
-			s.Mode = "file"
-		}
 		return nil
 	default:
-		return fmt.Errorf("source: expected string or table, got %T", data)
+		return fmt.Errorf("source: expected a table with path, mode, and target fields, got %T", data)
 	}
 }

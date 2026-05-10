@@ -38,13 +38,12 @@ func TestLoad_HappyPath(t *testing.T) {
 	assert.Equal(t, "nvim", m.Name)
 	assert.Equal(t, "Neovim configuration", m.Description)
 	assert.Equal(t, []string{"linux", "darwin"}, m.SupportedOS)
-	assert.Equal(t, "$HOME/.config/nvim", m.Target)
 	assert.Equal(t, "os", m.ProfileKey)
 	assert.Len(t, m.Profiles, 2)
 	assert.Contains(t, m.Profiles, "linux")
 	assert.Contains(t, m.Profiles, "darwin")
-	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "linux", Mode: "file"}}, m.Profiles["linux"].Sources)
-	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "darwin", Mode: "file"}}, m.Profiles["darwin"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file", Target: "$HOME/.config/nvim"}, {Path: "linux", Mode: "file", Target: "$HOME/.config/nvim"}}, m.Profiles["linux"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file", Target: "$HOME/.config/nvim"}, {Path: "darwin", Mode: "file", Target: "$HOME/.config/nvim"}}, m.Profiles["darwin"].Sources)
 }
 
 func TestLoad_FileNotFound(t *testing.T) {
@@ -107,7 +106,7 @@ func TestDiscover_ReturnsErrorOnInvalidManifest(t *testing.T) {
 	require.NoError(t, err)
 
 	ricePath := filepath.Join(badDir, "rice.toml")
-	err = os.WriteFile(ricePath, []byte("schema_version = 99\nname = \"bad\"\nsupported_os = [\"linux\"]\nprofile_key = \"os\"\n[profiles.default]\nsources = [\"common\"]"), 0644)
+	err = os.WriteFile(ricePath, []byte("schema_version = 99\nname = \"bad\"\nsupported_os = [\"linux\"]\nprofile_key = \"os\"\n[profiles.default]\nsources = [{path = \"common\", mode = \"file\", target = \"$HOME\"}]"), 0644)
 	require.NoError(t, err)
 
 	manifests, err := Discover(tmpDir)
@@ -134,11 +133,10 @@ func TestDiscover_SkipsDirectoriesWithoutRiceToml(t *testing.T) {
 	validToml := `schema_version = 1
 name = "valid"
 supported_os = ["linux"]
-target = "$HOME/.config/valid"
 profile_key = "os"
 
 [profiles.default]
-sources = ["common"]`
+sources = [{path = "common", mode = "file", target = "$HOME/.config/valid"}]`
 	err = os.WriteFile(ricePath, []byte(validToml), 0644)
 	require.NoError(t, err)
 
@@ -173,6 +171,6 @@ func TestDiscover_MultiProfileManifest(t *testing.T) {
 	assert.Equal(t, "ghostty", ghosttyManifest.Name)
 	assert.Equal(t, "machine", ghosttyManifest.ProfileKey)
 	assert.Len(t, ghosttyManifest.Profiles, 2)
-	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "macbook", Mode: "file"}}, ghosttyManifest.Profiles["macbook"].Sources)
-	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file"}, {Path: "devstick", Mode: "file"}}, ghosttyManifest.Profiles["devstick"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file", Target: "$HOME/.config/ghostty"}, {Path: "macbook", Mode: "file", Target: "$HOME/.config/ghostty"}}, ghosttyManifest.Profiles["macbook"].Sources)
+	assert.Equal(t, []SourceSpec{{Path: "common", Mode: "file", Target: "$HOME/.config/ghostty"}, {Path: "devstick", Mode: "file", Target: "$HOME/.config/ghostty"}}, ghosttyManifest.Profiles["devstick"].Sources)
 }

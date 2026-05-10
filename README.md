@@ -82,19 +82,24 @@ schema_version = 1
 name = "ghostty"
 description = "Ghostty terminal emulator configuration"
 supported_os = ["linux", "darwin"]
-target = "$HOME"
 
 [profiles.common]
-sources = ["common"]
+sources = [{path = "common", mode = "file", target = "$HOME"}]
 
 [profiles.macbook]
-sources = ["common", "macbook"]
+sources = [
+  {path = "common", mode = "file", target = "$HOME"},
+  {path = "macbook", mode = "file", target = "$HOME"},
+]
 
 [profiles.devstick]
-sources = ["common", "devstick"]
+sources = [
+  {path = "common", mode = "file", target = "$HOME"},
+  {path = "devstick", mode = "file", target = "$HOME"},
+]
 ```
 
-Sources are composed in order. `["common", "macbook"]` lays down everything in `common/` first, then overlays `macbook/`. Later wins on conflict.
+Sources are composed in order. Files from multiple sources are overlaid, with later sources winning on conflict.
 
 ## Profiles
 
@@ -110,7 +115,11 @@ To add a new machine variant, add a profile that lists `common` first, then your
 
 ```toml
 [profiles.workmac]
-sources = ["common", "macbook", "work"]
+sources = [
+  {path = "common", mode = "file", target = "$HOME"},
+  {path = "macbook", mode = "file", target = "$HOME"},
+  {path = "work", mode = "file", target = "$HOME"},
+]
 ```
 
 Then: `rice install <pkg> --profile workmac`.

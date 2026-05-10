@@ -1,227 +1,95 @@
 {
-  "active_plan": "/Users/guneet/rice/.sisyphus/plans/rice-cli.md",
-  "started_at": "2026-05-10T14:08:10.133Z",
+  "active_plan": "/Users/guneet/rice/.sisyphus/plans/source-spec-table-only.md",
+  "started_at": "2026-05-10T19:18:01.195Z",
   "session_ids": [
-    "ses_1ee2a3e57ffel2n67En7SPTrlK",
-    "ses_1ed3ad71dffeVzHIeyYTq9DW4J",
-    "ses_1ed3aa65cffe1ynkM3J1SpKnv3",
-    "ses_1ed3a5057ffehZIPtDj8MeQo2p",
-    "ses_1ed3a04e7ffeBXsSuZkE7WWw07"
+    "ses_1ee2a3e57ffel2n67En7SPTrlK"
   ],
-  "plan_name": "rice-cli",
   "session_origins": {
-    "ses_1ee2a3e57ffel2n67En7SPTrlK": "direct",
-    "ses_1ed3ad71dffeVzHIeyYTq9DW4J": "appended",
-    "ses_1ed3aa65cffe1ynkM3J1SpKnv3": "appended",
-    "ses_1ed3a5057ffehZIPtDj8MeQo2p": "appended",
-    "ses_1ed3a04e7ffeBXsSuZkE7WWw07": "appended"
+    "ses_1ee2a3e57ffel2n67En7SPTrlK": "direct"
   },
+  "plan_name": "source-spec-table-only",
+  "agent": "atlas",
   "task_sessions": {
     "todo:1": {
       "task_key": "todo:1",
       "task_label": "1",
-      "task_title": "**Go module init + project scaffolding + test infra**",
-      "session_id": "ses_1edc71b5fffepcH6SMXFrm9OWL",
+      "task_title": "Update SourceSpec schema (drop string branch, remove Manifest.Target)",
+      "session_id": "ses_1ecac008dffeVF0ohDpOZ30fR1",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T14:10:40.565Z"
+      "updated_at": "2026-05-10T19:19:28.100Z"
     },
     "todo:2": {
       "task_key": "todo:2",
       "task_label": "2",
-      "task_title": "**rice.toml schema definition (Go structs + validation rules)**",
-      "session_id": "ses_1edc5ba45ffet33Jh34ofo8JOk",
+      "task_title": "Update validator (target required for both modes, env expansion)",
+      "session_id": "ses_1ecaab361ffehhrfTkgRvEwid4",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T14:14:11.533Z"
+      "updated_at": "2026-05-10T19:26:13.034Z"
     },
     "todo:3": {
       "task_key": "todo:3",
       "task_label": "3",
-      "task_title": "**Cross-platform symlink primitives**",
-      "session_id": "ses_1edc283fcffeK7k4auZuius8bZ",
+      "task_title": "Update walker, delete profile.Resolve, drop Manifest.Target consumers",
+      "session_id": "ses_1eca2aaa1ffeL5UrKkFOHkZkQ7",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T14:15:56.575Z"
+      "updated_at": "2026-05-10T19:30:35.271Z"
     },
     "todo:4": {
       "task_key": "todo:4",
       "task_label": "4",
-      "task_title": "**State file format + read/write**",
-      "session_id": "ses_1edc0ea76ffeBGcd6dah9vPJQG",
+      "task_title": "Migrate real packages — group A (zsh, ghostty, hyprland)",
+      "session_id": "ses_1eca08f62ffe305kn3C2AAnYpX",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T14:17:40.473Z"
+      "updated_at": "2026-05-10T19:31:43.941Z"
     },
     "todo:5": {
       "task_key": "todo:5",
       "task_label": "5",
-      "task_title": "**Profile resolution rules + validation**",
-      "session_id": "ses_1ed78797bffeQVci6tNEr480b3",
+      "task_title": "Migrate real packages — group B (waybar, wofi, opencode)",
+      "session_id": "ses_1ec9fec29ffeVigZvQXrKTSQ4l",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T15:36:28.927Z"
+      "updated_at": "2026-05-10T19:32:25.664Z"
     },
-    "todo:7": {
-      "task_key": "todo:7",
-      "task_label": "7",
-      "task_title": "**Manifest discovery + parsing**",
-      "session_id": "ses_1ed74a1a9ffej2F6NDKQROaSF1",
+    "todo:6": {
+      "task_key": "todo:6",
+      "task_label": "6",
+      "task_title": "Migrate nvim package (already folder-mode; remove package target)",
+      "session_id": "ses_1ec9f4c08ffemXpdySwfOBmb84",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T15:42:55.010Z"
-    },
-    "todo:8": {
-      "task_key": "todo:8",
-      "task_label": "8",
-      "task_title": "**Package OS gating**",
-      "session_id": "ses_1ed7157cbffeJHYWyQ0o88aVx6",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-05-10T15:44:01.153Z"
+      "updated_at": "2026-05-10T19:32:58.632Z"
     },
     "todo:9": {
       "task_key": "todo:9",
       "task_label": "9",
-      "task_title": "**Conflict detection**",
-      "session_id": "ses_1ed703b23ffeecBa1E4f6KYFpm",
+      "task_title": "Migrate inline TOML in cli/install_test.go",
+      "session_id": "ses_1ec9e87e3ffe5wBUzjgpNQvfx6",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T15:45:29.109Z"
+      "updated_at": "2026-05-10T19:34:19.088Z"
     },
     "todo:10": {
       "task_key": "todo:10",
       "task_label": "10",
-      "task_title": "**Install orchestrator**",
-      "session_id": "ses_1ed6cd254ffeljRUVEPKhZkEAQ",
+      "task_title": "Migrate inline TOML in internal/installer/install_test.go and internal/manifest/load_test.go",
+      "session_id": "ses_1ec9d7acbffeXevPH1I4MzZJ1X",
       "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-05-10T15:51:37.944Z"
+      "category": "quick",
+      "updated_at": "2026-05-10T19:35:21.881Z"
     },
     "todo:11": {
       "task_key": "todo:11",
       "task_label": "11",
-      "task_title": "**Uninstall orchestrator**",
-      "session_id": "ses_1ed69286cffeRJThP2uEdQ6xMG",
+      "task_title": "Update AGENTS.md, run final verify gate, manual repro, single commit",
+      "session_id": "ses_1ec9c0f66ffe8j8RlGOwLti8di",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-05-10T16:00:01.350Z"
-    },
-    "todo:12": {
-      "task_key": "todo:12",
-      "task_label": "12",
-      "task_title": "**Switch orchestrator with pre-flight validation**",
-      "session_id": "ses_1ed54fd0cffemN2gPigF2LTK2W",
-      "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-05-10T16:16:37.802Z"
-    },
-    "todo:13": {
-      "task_key": "todo:13",
-      "task_label": "13",
-      "task_title": "**CLI scaffold + cobra setup + root cmd**",
-      "session_id": "ses_1ed52462affe4P7OkmlrKUtA1G",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-05-10T16:20:00.866Z"
-    },
-    "todo:14": {
-      "task_key": "todo:14",
-      "task_label": "14",
-      "task_title": "**install command**",
-      "session_id": "ses_1ed4e0bbdffeSlHxBWmMdqCp3Z",
-      "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-05-10T16:24:43.874Z"
-    },
-    "todo:15": {
-      "task_key": "todo:15",
-      "task_label": "15",
-      "task_title": "**uninstall command**",
-      "session_id": "ses_1ed4b0cc5ffe0dmWB4cAAxqwAV",
-      "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-05-10T16:26:18.944Z"
-    },
-    "todo:16": {
-      "task_key": "todo:16",
-      "task_label": "16",
-      "task_title": "**switch command**",
-      "session_id": "ses_1ed499674ffeSOtf5TyQOguXHn",
-      "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-05-10T16:30:58.653Z"
-    },
-    "todo:17": {
-      "task_key": "todo:17",
-      "task_label": "17",
-      "task_title": "**status command**",
-      "session_id": "ses_1ed454d85ffeXwbFtpxGdnYsIb",
-      "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-05-10T16:32:50.589Z"
-    },
-    "todo:18": {
-      "task_key": "todo:18",
-      "task_label": "18",
-      "task_title": "**doctor command**",
-      "session_id": "ses_1ed4395f3ffey4I8kjCSBynWYQ",
-      "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-05-10T16:35:09.263Z"
-    },
-    "todo:19": {
-      "task_key": "todo:19",
-      "task_label": "19",
-      "task_title": "**Add rice.toml to nvim, zsh, hyprland, waybar, wofi**",
-      "session_id": "ses_1ed412009ffePKjrEZ3MhP7ycb",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-05-10T16:36:23.108Z"
-    },
-    "todo:20": {
-      "task_key": "todo:20",
-      "task_label": "20",
-      "task_title": "**Migrate ghostty (delete install.sh, restructure, add rice.toml)**",
-      "session_id": "ses_1ed406de7ffeNZlDxUxEDNt5ic",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-05-10T16:37:49.907Z"
-    },
-    "todo:21": {
-      "task_key": "todo:21",
-      "task_label": "21",
-      "task_title": "**Split opencode skills into personal/work profiles + rice.toml**",
-      "session_id": "ses_1ed3f1b5dffe8z4nSm4vQsjiPY",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-05-10T16:39:06.654Z"
-    },
-    "todo:22": {
-      "task_key": "todo:22",
-      "task_label": "22",
-      "task_title": "**Write AGENTS.md documenting rice conventions**",
-      "session_id": "ses_1ed3dac8bffeQB0Atb0Wr05IH8",
-      "agent": "Sisyphus-Junior",
-      "category": "writing",
-      "updated_at": "2026-05-10T16:41:11.613Z"
-    },
-    "todo:23": {
-      "task_key": "todo:23",
-      "task_label": "23",
-      "task_title": "**Rewrite README.md for rice CLI workflow**",
-      "session_id": "ses_1ed3c0715ffebAvUPGKJu0w54L",
-      "agent": "Sisyphus-Junior",
-      "category": "writing",
-      "updated_at": "2026-05-10T16:42:11.289Z"
-    },
-    "final-wave:f1": {
-      "task_key": "final-wave:f1",
-      "task_label": "F1",
-      "task_title": "**Plan Compliance Audit** — `oracle`",
-      "session_id": "ses_1ed37fcb3ffe1frQXIQORmEGUW",
-      "agent": "oracle",
-      "updated_at": "2026-05-10T16:46:21.991Z"
+      "updated_at": "2026-05-10T19:37:54.278Z"
     }
   }
 }

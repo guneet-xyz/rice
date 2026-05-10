@@ -2046,19 +2046,19 @@ Max Concurrent: 7 (Wave 1)
 >
 > **Do NOT auto-proceed after verification. Wait for user's explicit approval before marking work complete.**
 
-- [ ] F1. **Plan Compliance Audit** — `oracle`
+- [x] F1. **Plan Compliance Audit** — `oracle`
   Read `.sisyphus/plans/rice-cli.md` end-to-end. For each "Must Have": verify implementation exists by reading the relevant Go file or running the relevant `rice` command. For each "Must NOT Have": grep the codebase for forbidden patterns (e.g., `--force`, `os/exec.*stow`, multi-axis profile code, target paths outside HOME) — reject with file:line if found. Check evidence files exist in `.sisyphus/evidence/`.
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`
 
-- [ ] F2. **Code Quality Review** — `unspecified-high`
+- [x] F2. **Code Quality Review** — `unspecified-high`
   Run `go build ./...`, `go vet ./...`, `go test ./... -race`, and `gofmt -l .` (must produce no output). Review all changed Go files for: silent error swallowing (`_ = err`), panic in non-main code, package-level mutable globals, missing error wrapping, magic strings that should be constants, AI slop patterns (excessive comments, generic names like `data`/`result`/`item`/`temp`).
   Output: `Build [PASS/FAIL] | Vet [PASS/FAIL] | Tests [N pass/N fail] | gofmt [clean/dirty] | Files [N clean/N issues] | VERDICT`
 
-- [ ] F3. **End-to-End Manual QA** — `unspecified-high`
+- [x] F3. **End-to-End Manual QA** — `unspecified-high`
   In a clean tmpdir acting as $HOME: build the binary, then exercise the full lifecycle WITH confirmation flow: `rice install ghostty --profile macbook` (verify plan printed, prompt shown, "y" proceeds) → `rice status` → `rice switch ghostty devstick` (verify combined plan, prompt) → `rice install opencode --profile work --yes` (verify plan printed, NO prompt, proceeds) → `rice switch opencode personal` (at prompt: bare Enter, verify cancellation with no FS change) → re-run with "y" → `rice doctor` (read-only, NO prompt) → `rice status` (read-only, NO prompt) → `rice uninstall ghostty`. Test failure modes: install on unsupported OS (simulate via GOOS), install with conflict (pre-create file at target — no prompt should appear, conflict report only), invalid profile name, missing manifest. Test logging: run with default level → assert no DEBUG/INFO on stderr but log file populated; run with `--log-level debug` → assert debug visible on stderr; run with `RICE_LOG_LEVEL=info rice install ...` → assert info visible; verify log file at `~/.config/rice/logs/rice.log` accumulates across all runs (no rotation). Save terminal output + log file samples to `.sisyphus/evidence/final-qa/`.
   Output: `Lifecycle [PASS/FAIL] | Confirmation flow [N/N scenarios] | Logging [N/N levels verified] | Failure modes [N/N tested] | VERDICT`
 
-- [ ] F4. **Scope Fidelity Check** — `deep`
+- [x] F4. **Scope Fidelity Check** — `deep`
   For each task in this plan: read "What to do", read actual `git diff` for that task's files. Verify 1:1 — everything in spec was built, nothing beyond spec was built. Check "Must NOT Have" guardrails are honored. Detect: code in packages that weren't supposed to be touched (only ghostty + opencode should have content changes; others only get a new rice.toml), CLI commands that weren't planned (no init, no --all, no --force), feature creep into doctor (no auto-fix code).
   Output: `Tasks [N/N compliant] | Out-of-scope changes [CLEAN/N issues] | Guardrails [N/N honored] | VERDICT`
 

@@ -49,6 +49,8 @@ func newRequest(t *testing.T, repoRoot, profile string) InstallRequest {
 	t.Helper()
 	homeDir := t.TempDir()
 	statePath := filepath.Join(t.TempDir(), "state.json")
+	t.Setenv("HOME", homeDir)
+	t.Setenv("USERPROFILE", homeDir)
 	return InstallRequest{
 		RepoRoot:    repoRoot,
 		PackageName: "mypkg",

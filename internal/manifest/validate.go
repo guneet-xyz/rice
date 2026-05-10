@@ -46,16 +46,24 @@ func Validate(m *Manifest) error {
 			}
 
 			switch source.Mode {
-			case "", "file":
-				if source.Target != "" {
-					return fmt.Errorf("source %q: target field is only valid for folder-mode", source.Path)
-				}
-			case "folder":
+			case "file", "folder":
 				if source.Target == "" {
-					return fmt.Errorf("source %q: folder-mode requires a non-empty target field", source.Path)
+					return fmt.Errorf("source %q: target is required", source.Path)
+				}
+				// Validate target prefix
+				validPrefixes := []string{"$HOME", "$XDG_CONFIG_HOME", "%USERPROFILE%", "%APPDATA%"}
+				isValid := false
+				for _, prefix := range validPrefixes {
+					if strings.HasPrefix(source.Target, prefix) {
+						isValid = true
+						break
+					}
+				}
+				if !isValid {
+					return fmt.Errorf("source %q: target %q must start with one of: $HOME, $XDG_CONFIG_HOME, %%USERPROFILE%%, %%APPDATA%%", source.Path, source.Target)
 				}
 			default:
-				return fmt.Errorf("source %q: unknown mode %q", source.Path, source.Mode)
+				return fmt.Errorf("source %q: mode must be \"file\" or \"folder\", got %q", source.Path, source.Mode)
 			}
 		}
 
@@ -65,20 +73,6 @@ func Validate(m *Manifest) error {
 				return fmt.Errorf("profile %q has duplicate source at index %d: %q", profileName, i, source.Path)
 			}
 			seen[source.Path] = true
-		}
-	}
-
-	if m.Target != "" {
-		validPrefixes := []string{"$HOME", "$XDG_CONFIG_HOME", "%USERPROFILE%", "%APPDATA%"}
-		isValid := false
-		for _, prefix := range validPrefixes {
-			if strings.HasPrefix(m.Target, prefix) {
-				isValid = true
-				break
-			}
-		}
-		if !isValid {
-			return fmt.Errorf("target %q must start with one of: $HOME, $XDG_CONFIG_HOME, %%USERPROFILE%%, %%APPDATA%%", m.Target)
 		}
 	}
 

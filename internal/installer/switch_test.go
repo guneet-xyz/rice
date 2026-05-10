@@ -21,6 +21,8 @@ func switchSetup(t *testing.T, initialProfile, newProfile string) (SwitchRequest
 	repo := fixtureRepo(t)
 	homeDir := t.TempDir()
 	statePath := filepath.Join(t.TempDir(), "state.json")
+	t.Setenv("HOME", homeDir)
+	t.Setenv("USERPROFILE", homeDir)
 
 	installReq := InstallRequest{
 		RepoRoot:    repo,
@@ -48,6 +50,8 @@ func TestBuildSwitchPlan_PackageNotInstalled(t *testing.T) {
 	repo := fixtureRepo(t)
 	homeDir := t.TempDir()
 	statePath := filepath.Join(t.TempDir(), "state.json")
+	t.Setenv("HOME", homeDir)
+	t.Setenv("USERPROFILE", homeDir)
 
 	req := SwitchRequest{
 		RepoRoot:    repo,

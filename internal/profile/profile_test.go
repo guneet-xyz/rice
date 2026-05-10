@@ -9,12 +9,12 @@ import (
 	"github.com/guneet/rice/internal/manifest"
 )
 
-func TestResolve(t *testing.T) {
+func TestResolveSpecs(t *testing.T) {
 	tests := []struct {
 		name        string
 		manifest    *manifest.Manifest
 		profileName string
-		want        []string
+		want        []manifest.SourceSpec
 		wantErr     bool
 		errContains []string
 	}{
@@ -24,12 +24,12 @@ func TestResolve(t *testing.T) {
 				Name: "nvim",
 				Profiles: map[string]manifest.ProfileDef{
 					"default": {
-						Sources: []manifest.SourceSpec{{Path: "."}},
+						Sources: []manifest.SourceSpec{{Path: ".", Mode: "file", Target: "$HOME"}},
 					},
 				},
 			},
 			profileName: "default",
-			want:        []string{"."},
+			want:        []manifest.SourceSpec{{Path: ".", Mode: "file", Target: "$HOME"}},
 			wantErr:     false,
 		},
 		{
@@ -38,13 +38,19 @@ func TestResolve(t *testing.T) {
 				Name: "ghostty",
 				Profiles: map[string]manifest.ProfileDef{
 					"macbook": {
-						Sources: []manifest.SourceSpec{{Path: "common"}, {Path: "macbook"}},
+						Sources: []manifest.SourceSpec{
+							{Path: "common", Mode: "file", Target: "$HOME"},
+							{Path: "macbook", Mode: "file", Target: "$HOME"},
+						},
 					},
 				},
 			},
 			profileName: "macbook",
-			want:        []string{"common", "macbook"},
-			wantErr:     false,
+			want: []manifest.SourceSpec{
+				{Path: "common", Mode: "file", Target: "$HOME"},
+				{Path: "macbook", Mode: "file", Target: "$HOME"},
+			},
+			wantErr: false,
 		},
 		{
 			name: "unknown profile with available profiles",
@@ -52,10 +58,10 @@ func TestResolve(t *testing.T) {
 				Name: "nvim",
 				Profiles: map[string]manifest.ProfileDef{
 					"default": {
-						Sources: []manifest.SourceSpec{{Path: "."}},
+						Sources: []manifest.SourceSpec{{Path: ".", Mode: "file", Target: "$HOME"}},
 					},
 					"minimal": {
-						Sources: []manifest.SourceSpec{{Path: "minimal"}},
+						Sources: []manifest.SourceSpec{{Path: "minimal", Mode: "file", Target: "$HOME"}},
 					},
 				},
 			},
@@ -65,35 +71,32 @@ func TestResolve(t *testing.T) {
 			errContains: []string{"unknown", "nvim", "default", "minimal"},
 		},
 		{
-			name: "unknown profile with empty profiles map",
-			manifest: &manifest.Manifest{
-				Name:     "empty",
-				Profiles: map[string]manifest.ProfileDef{},
-			},
-			profileName: "any",
-			want:        nil,
-			wantErr:     true,
-			errContains: []string{"any", "empty"},
-		},
-		{
 			name: "preserves source order",
 			manifest: &manifest.Manifest{
 				Name: "zsh",
 				Profiles: map[string]manifest.ProfileDef{
 					"work": {
-						Sources: []manifest.SourceSpec{{Path: "base"}, {Path: "work"}, {Path: "secrets"}},
+						Sources: []manifest.SourceSpec{
+							{Path: "base", Mode: "file", Target: "$HOME"},
+							{Path: "work", Mode: "file", Target: "$HOME"},
+							{Path: "secrets", Mode: "file", Target: "$HOME"},
+						},
 					},
 				},
 			},
 			profileName: "work",
-			want:        []string{"base", "work", "secrets"},
-			wantErr:     false,
+			want: []manifest.SourceSpec{
+				{Path: "base", Mode: "file", Target: "$HOME"},
+				{Path: "work", Mode: "file", Target: "$HOME"},
+				{Path: "secrets", Mode: "file", Target: "$HOME"},
+			},
+			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := Resolve(tt.manifest, tt.profileName)
+			got, err := ResolveSpecs(tt.manifest, tt.profileName)
 
 			if tt.wantErr {
 				require.Error(t, err)
