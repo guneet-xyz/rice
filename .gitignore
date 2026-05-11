@@ -7,5 +7,5 @@ zsh/.config/zsh/secrets.zsh
 *.test
 coverage.out
 
-# Rice CLI
-.sisyphus/evidence/
+# Sisyphus orchestration metadata (local only)
+.sisyphus/
