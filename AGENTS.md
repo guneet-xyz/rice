@@ -6,10 +6,11 @@ For CLI behavior, flags, state file format, and command reference, see the [easy
 
 ## Repo Layout
 
-Each top-level directory is a dotfile **package** with a `rice.toml` manifest at its root:
+All packages are declared in a **single root `rice.toml`** at the repo root. Each top-level directory is a dotfile package directory containing the actual dotfiles:
 
 ```
 rice/
+├── rice.toml    # single root manifest — declares ALL packages
 ├── nvim/        # Neovim
 ├── zsh/         # Zsh
 ├── ghostty/     # Ghostty terminal
@@ -21,150 +22,137 @@ rice/
 └── AGENTS.md    # you are here
 ```
 
-A package directory contains a `rice.toml` plus the dotfiles themselves, organized into source subdirectories (e.g. `common/`, `macbook/`, or a nested `.config/<tool>/` tree).
+There are **no per-package `rice.toml` files**. The single root `rice.toml` is the only manifest easyrice reads.
 
 ## rice.toml Schema
 
-Every package directory has a `rice.toml` at its root.
+The root `rice.toml` uses a `[packages.<name>]` map to declare all packages:
 
 ```toml
 schema_version = 1
-name = "ghostty"
+
+[packages.ghostty]
 description = "Ghostty terminal emulator configuration"
 supported_os = ["linux", "darwin"]
 
-[profiles.common]
+[packages.ghostty.profiles.common]
 sources = [{path = "common", mode = "file", target = "$HOME"}]
 
-[profiles.macbook]
+[packages.ghostty.profiles.macbook]
 sources = [
-  {path = "common", mode = "file", target = "$HOME"},
+  {path = "common",  mode = "file", target = "$HOME"},
   {path = "macbook", mode = "file", target = "$HOME"},
 ]
 ```
 
 ### Fields
 
-| Field             | Type     | Required | Notes                                                            |
-|-------------------|----------|----------|------------------------------------------------------------------|
-| `schema_version`  | int      | yes      | Currently `1`. Bump only on breaking schema changes.             |
-| `name`            | string   | yes      | Package name. Should match the directory name.                   |
-| `description`     | string   | no       | Short human-readable description.                                |
-| `supported_os`    | []string | yes      | OS gate at package level. Values: `linux`, `darwin`, `windows`.  |
-| `profile_key`     | string   | no       | Reserved for future per-package profile overrides.               |
-| `profiles.<name>` | table    | yes      | One or more profiles. At least `common` is conventional.         |
-| `profiles.<name>.sources` | []table | yes | List of source tables. Each entry requires `path` (relative subdir), `mode` (`"file"` or `"folder"`), and `target` (absolute destination root, env vars expanded). |
+| Field                       | Type     | Required | Notes                                                                 |
+|-----------------------------|----------|----------|-----------------------------------------------------------------------|
+| `schema_version`            | int      | yes      | Must be `1`.                                                          |
+| `packages.<name>`           | table    | yes      | One entry per package. Name must have no `/` or whitespace.           |
+| `packages.<name>.description` | string | no       | Short human-readable description.                                     |
+| `packages.<name>.supported_os` | []string | yes  | OS gate. Values: `linux`, `darwin`, `windows`.                        |
+| `packages.<name>.root`      | string   | no       | Subdirectory within the package dir to use as root. Defaults to package name. No leading `/` or `..`. |
+| `packages.<name>.profiles.<p>` | table | yes     | One or more profiles per package.                                     |
+| `profiles.<p>.sources`      | []table  | yes      | List of source specs. Each requires `path`, `mode`, `target`.         |
 
-`sources` are relative to the package directory. Each source table specifies how files are installed.
+**Forbidden fields** (not in schema — silently ignored but misleading):
+- `name = "..."` — do NOT add this anywhere
+- Top-level `profiles` tables (old schema) — not supported
 
-## Source Spec
+### Source Spec
 
-Each source entry in the `sources` list is a table with three required fields:
+Each source entry requires three fields:
 
-- **`path`**: Relative path to the source directory within the package (e.g., `"common"`, `".config/nvim"`).
-- **`mode`**: Installation mode:
-  - `"file"`: Walk the source directory and symlink each file individually under `target`. Files from multiple sources are overlaid.
-  - `"folder"`: Symlink the entire source directory as a single unit to `target`. Cannot be overlaid by other sources in the same profile.
-- **`target`**: Absolute destination root where files are installed. Supports environment variable expansion (e.g., `"$HOME"`, `"$HOME/.config"`).
+- **`path`**: Relative path within the package directory. No `..`, no leading `/`.
+- **`mode`**: `"file"` (walk and symlink each file) or `"folder"` (symlink the entire directory).
+- **`target`**: Absolute destination root. Supports env var expansion (`$HOME`, `$XDG_CONFIG_HOME`).
 
-### File-mode example (default, overlayable):
+#### File mode (overlayable):
 
 ```toml
-[profiles.common]
+[packages.ghostty.profiles.macbook]
 sources = [
-  {path = "common", mode = "file", target = "$HOME"},
+  {path = "common",  mode = "file", target = "$HOME"},
   {path = "macbook", mode = "file", target = "$HOME"},
 ]
 ```
 
-This installs files from `common/` and `macbook/` into `$HOME`, with `macbook/` overlaying `common/`.
+Files from multiple sources are overlaid (macbook overlays common).
 
-### Folder-mode example (single symlink, not overlayable):
+#### Folder mode (single symlink):
 
 ```toml
-[profiles.common]
+[packages.nvim.profiles.default]
 sources = [{path = ".config/nvim", mode = "folder", target = "$HOME/.config/nvim"}]
 ```
 
-This symlinks `<repo>/nvim/.config/nvim` as a single unit to `$HOME/.config/nvim`. Folder-mode sources are ideal for tools like nvim and opencode that manage their entire config directory.
+Symlinks the entire directory as one unit. Cannot be overlaid.
 
 ## Profile Conventions
 
-Standard profile names (use these unless you have a strong reason not to):
-
-- `common`   — shared baseline used by every machine
-- `macbook`  — personal MacBook overlay
-- `devstick` — Linux dev box / portable USB rig
-- `personal` — personal-only tweaks (cross-machine)
-- `work`     — work-only tweaks
-
-Profiles compose by listing sources. To make a new machine variant, add a new profile that lists `common` first, then your overlay:
-
-```toml
-[profiles.workmac]
-sources = [
-  {path = "common", mode = "file", target = "$HOME"},
-  {path = "macbook", mode = "file", target = "$HOME"},
-  {path = "work", mode = "file", target = "$HOME"},
-]
-```
+| Package    | Profiles                        | Notes                                      |
+|------------|---------------------------------|--------------------------------------------|
+| ghostty    | `common`, `macbook`, `devstick` | file mode; macbook/devstick overlay common |
+| nvim       | `default`                       | folder mode                                |
+| zsh        | `common`                        | file mode; `secrets.zsh` is gitignored     |
+| hyprland   | `common`                        | folder mode; Linux-only                    |
+| waybar     | `common`                        | folder mode; Linux-only                    |
+| wofi       | `common`                        | folder mode; Linux-only                    |
+| opencode   | `personal`, `work`              | file mode; `work` is a placeholder         |
 
 ## OS Gating
 
-Two layers:
+`supported_os` gates the package at install time. If the current OS is not in the list, easyrice skips the package.
 
-1. **Package level** via `supported_os`. If the current OS is not in the list, the package is skipped entirely (with a warning).
-2. **Profile level** via `os` on a profile (reserved field). Currently profiles inherit from the package-level gate.
+Valid values: `linux`, `darwin`, `windows` (detected via Go's `runtime.GOOS`).
 
-Valid OS values: `linux`, `darwin`, `windows`. Detected via Go's `runtime.GOOS` inside easyrice.
+| Package  | supported_os                    |
+|----------|---------------------------------|
+| ghostty  | linux, darwin                   |
+| nvim     | linux, darwin                   |
+| zsh      | linux, darwin                   |
+| hyprland | linux                           |
+| waybar   | linux                           |
+| wofi     | linux                           |
+| opencode | linux, darwin, windows          |
 
 ## Adding a New Dotfile Package
 
-1. Create the package directory at the repo root:
-
+1. Create the package directory at the repo root and add dotfiles:
    ```sh
    mkdir -p mytool/common
+   # add config files under mytool/common/
    ```
 
-2. Drop the actual config files into `common/` (and any per-machine overlay dirs you need, like `macbook/`).
-
-3. Add `mytool/rice.toml`:
-
+2. Add a `[packages.mytool]` block to the root `rice.toml`:
    ```toml
-   schema_version = 1
-   name = "mytool"
+   [packages.mytool]
    description = "My new tool"
    supported_os = ["linux", "darwin"]
 
-   [profiles.common]
+   [packages.mytool.profiles.common]
    sources = [{path = "common", mode = "file", target = "$HOME"}]
-
-   [profiles.macbook]
-   sources = [
-     {path = "common", mode = "file", target = "$HOME"},
-     {path = "macbook", mode = "file", target = "$HOME"},
-   ]
    ```
 
-4. Test the install against a temp `$HOME` and state file:
-
+3. Test the install in a sandbox:
    ```sh
-   easyrice install mytool --profile common --repo . --state /tmp/rice-state.json
-   easyrice status --state /tmp/rice-state.json
-   easyrice uninstall mytool --state /tmp/rice-state.json -y
+   SANDBOX=$(mktemp -d)
+   HOME=$SANDBOX/home XDG_CONFIG_HOME=$SANDBOX/home/.config rice install mytool --profile common -y --state $SANDBOX/state.json
+   find $SANDBOX/home -type l -ls
+   rice uninstall mytool --state $SANDBOX/state.json -y
    ```
 
-5. Commit:
-
+4. Commit:
    ```sh
-   git add mytool/ && git commit -m "feat(mytool): add package"
+   git add mytool/ rice.toml && git commit -m "feat(mytool): add package"
    ```
 
 ## CLI Reference
 
-The `easyrice` CLI lives in a separate repo. See [github.com/guneet-xyz/easyrice](https://github.com/guneet-xyz/easyrice) for:
+The `rice` CLI lives in a separate repo. See [github.com/guneet-xyz/easyrice](https://github.com/guneet-xyz/easyrice) for:
 
 - Command reference (`install`, `uninstall`, `switch`, `status`, `doctor`)
-- Persistent flags (`--repo`, `--state`, `--log-level`, `--yes`)
 - State file format and location
 - Logging configuration

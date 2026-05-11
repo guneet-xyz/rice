@@ -1,0 +1,65 @@
+schema_version = 1
+
+[packages.ghostty]
+description = "Ghostty terminal emulator configuration"
+supported_os = ["linux", "darwin"]
+
+[packages.ghostty.profiles.common]
+sources = [{path = "common", mode = "file", target = "$HOME"}]
+
+[packages.ghostty.profiles.macbook]
+sources = [
+  {path = "common",  mode = "file", target = "$HOME"},
+  {path = "macbook", mode = "file", target = "$HOME"},
+]
+
+[packages.ghostty.profiles.devstick]
+sources = [
+  {path = "common",   mode = "file", target = "$HOME"},
+  {path = "devstick", mode = "file", target = "$HOME"},
+]
+
+[packages.nvim]
+description = "Neovim configuration (Kickstart-based)"
+supported_os = ["linux", "darwin"]
+
+[packages.nvim.profiles.default]
+sources = [{path = ".config/nvim", mode = "folder", target = "$HOME/.config/nvim"}]
+
+[packages.zsh]
+description = "Zsh shell configuration"
+supported_os = ["linux", "darwin"]
+
+[packages.zsh.profiles.common]
+sources = [{path = ".", mode = "file", target = "$HOME"}]
+
+[packages.hyprland]
+description = "Hyprland wayland compositor configuration"
+supported_os = ["linux"]
+
+[packages.hyprland.profiles.common]
+sources = [{path = ".config/hypr", mode = "folder", target = "$HOME/.config/hypr"}]
+
+[packages.waybar]
+description = "Waybar status bar configuration"
+supported_os = ["linux"]
+
+[packages.waybar.profiles.common]
+sources = [{path = ".config/waybar", mode = "folder", target = "$HOME/.config/waybar"}]
+
+[packages.wofi]
+description = "Wofi application launcher configuration"
+supported_os = ["linux"]
+
+[packages.wofi.profiles.common]
+sources = [{path = ".config/wofi", mode = "folder", target = "$HOME/.config/wofi"}]
+
+[packages.opencode]
+description = "OpenCode AI assistant configuration and skills"
+supported_os = ["linux", "darwin", "windows"]
+
+[packages.opencode.profiles.personal]
+sources = [{path = "personal", mode = "file", target = "$HOME"}]
+
+[packages.opencode.profiles.work]
+sources = [{path = "work", mode = "file", target = "$HOME"}]

@@ -4,23 +4,46 @@ Personal dotfile packages managed by [easyrice](https://github.com/guneet-xyz/ea
 
 ## Packages
 
-| Package    | Description                        |
-|------------|------------------------------------|
-| `nvim/`    | Neovim configuration               |
-| `zsh/`     | Zsh shell configuration            |
-| `ghostty/` | Ghostty terminal emulator config   |
-| `hyprland/`| Hyprland window manager config     |
-| `waybar/`  | Waybar status bar config           |
-| `wofi/`    | Wofi launcher config               |
-| `opencode/`| OpenCode AI assistant config       |
+| Package     | Description                              | OS              |
+|-------------|------------------------------------------|-----------------|
+| `ghostty/`  | Ghostty terminal emulator configuration  | linux, darwin   |
+| `nvim/`     | Neovim configuration (Kickstart-based)   | linux, darwin   |
+| `zsh/`      | Zsh shell configuration                  | linux, darwin   |
+| `hyprland/` | Hyprland wayland compositor              | linux           |
+| `waybar/`   | Waybar status bar                        | linux           |
+| `wofi/`     | Wofi application launcher                | linux           |
+| `opencode/` | OpenCode AI assistant configuration      | linux, darwin, windows |
 
-## Usage
+## Setup
 
-Install the [easyrice](https://github.com/guneet-xyz/easyrice) CLI, then:
+1. Install [easyrice](https://github.com/guneet-xyz/easyrice).
+2. Clone this repo as your easyrice dotfiles source:
+   ```sh
+   rice init https://github.com/guneet-xyz/rice
+   ```
+3. Install a package:
+   ```sh
+   rice install ghostty --profile macbook -y
+   rice install nvim --profile default -y
+   rice install zsh --profile common -y
+   ```
+4. Check status:
+   ```sh
+   rice status
+   ```
 
-```sh
-easyrice install ghostty --profile macbook --repo ~/rice
-easyrice status
-```
+## Profiles
 
-Each package has a `rice.toml` manifest describing its profiles and sources. See [easyrice docs](https://github.com/guneet-xyz/easyrice) for the full schema and CLI reference. See [AGENTS.md](./AGENTS.md) for package conventions used in this repo.
+| Package    | Profiles                        |
+|------------|---------------------------------|
+| ghostty    | `common`, `macbook`, `devstick` |
+| nvim       | `default`                       |
+| zsh        | `common`                        |
+| hyprland   | `common`                        |
+| waybar     | `common`                        |
+| wofi       | `common`                        |
+| opencode   | `personal`, `work`              |
+
+## Schema
+
+All packages are declared in a single root `rice.toml` at the repo root. See [AGENTS.md](./AGENTS.md) for the schema reference and package conventions.
