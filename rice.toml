@@ -31,7 +31,19 @@ description = "Zsh shell configuration"
 supported_os = ["linux", "darwin"]
 
 [packages.zsh.profiles.common]
-sources = [{path = ".", mode = "file", target = "$HOME"}]
+sources = [{path = "common", mode = "file", target = "$HOME"}]
+
+[packages.zsh.profiles.linux]
+sources = [
+  {path = "common", mode = "file", target = "$HOME"},
+  {path = "linux",  mode = "file", target = "$HOME"},
+]
+
+[packages.zsh.profiles.macbook]
+sources = [
+  {path = "common",  mode = "file", target = "$HOME"},
+  {path = "macbook", mode = "file", target = "$HOME"},
+]
 
 [packages.hyprland]
 description = "Hyprland wayland compositor configuration"

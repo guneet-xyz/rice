@@ -132,9 +132,9 @@ esac
 [ -s "/Users/guneet/.bun/_bun" ] && source "/Users/guneet/.bun/_bun"
 
 if [[ "$OSTYPE" == "linux"* ]]; then
-  source "$HOME/.config/zsh/linux.zsh"
+  [ -s "$HOME/.config/zsh/linux.zsh" ] && source "$HOME/.config/zsh/linux.zsh"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  source "$HOME/.config/zsh/macbook.zsh"
+  [ -s "$HOME/.config/zsh/macbook.zsh" ] && source "$HOME/.config/zsh/macbook.zsh"
 else
   echo "unknown platform: $OSTYPE"
   exit 1

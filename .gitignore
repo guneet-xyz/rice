@@ -1,5 +1,5 @@
 **/.DS_Store
-zsh/.config/zsh/secrets.zsh
+zsh/common/.config/zsh/secrets.zsh
 
 # Go build artifacts
 /rice
