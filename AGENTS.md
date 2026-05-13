@@ -96,9 +96,9 @@ Symlinks the entire directory as one unit. Cannot be overlaid.
 |------------|---------------------------------|--------------------------------------------|
 | ghostty    | `common`, `macbook`, `devstick` | file mode; macbook/devstick overlay common |
 | nvim       | `default`                       | folder mode                                |
-| zsh        | `common`                        | file mode; `secrets.zsh` is gitignored     |
+| zsh        | `common`, `linux`, `macbook`    | file mode; linux/macbook overlay common; `secrets.zsh` is gitignored |
 | hyprland   | `common`                        | folder mode; Linux-only                    |
-| waybar     | `common`                        | folder mode; Linux-only                    |
+| waybar     | `default`, `experimental`, `line`, `zen` | file mode; theme profiles overlay default |
 | wofi       | `common`                        | folder mode; Linux-only                    |
 | opencode   | `personal`, `work`              | file mode; `work` is a placeholder         |
 

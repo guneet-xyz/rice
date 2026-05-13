@@ -25,7 +25,7 @@ Personal dotfile packages managed by [easyrice](https://github.com/guneet-xyz/ea
    ```sh
    rice install ghostty --profile macbook -y
    rice install nvim --profile default -y
-   rice install zsh --profile common -y
+   rice install zsh --profile macbook -y
    ```
 4. Check status:
    ```sh
@@ -38,9 +38,9 @@ Personal dotfile packages managed by [easyrice](https://github.com/guneet-xyz/ea
 |------------|---------------------------------|
 | ghostty    | `common`, `macbook`, `devstick` |
 | nvim       | `default`                       |
-| zsh        | `common`                        |
+| zsh        | `common`, `linux`, `macbook`    |
 | hyprland   | `common`                        |
-| waybar     | `common`                        |
+| waybar     | `default`, `experimental`, `line`, `zen` |
 | wofi       | `common`                        |
 | opencode   | `personal`, `work`              |
 
