@@ -56,8 +56,26 @@ sources = [{path = ".config/hypr", mode = "folder", target = "$HOME/.config/hypr
 description = "Waybar status bar configuration"
 supported_os = ["linux"]
 
-[packages.waybar.profiles.common]
-sources = [{path = ".config/waybar", mode = "folder", target = "$HOME/.config/waybar"}]
+[packages.waybar.profiles.default]
+sources = [{path = "default", mode = "file", target = "$HOME"}]
+
+[packages.waybar.profiles.experimental]
+sources = [
+  {path = "default",      mode = "file", target = "$HOME"},
+  {path = "experimental", mode = "file", target = "$HOME"},
+]
+
+[packages.waybar.profiles.line]
+sources = [
+  {path = "default", mode = "file", target = "$HOME"},
+  {path = "line",    mode = "file", target = "$HOME"},
+]
+
+[packages.waybar.profiles.zen]
+sources = [
+  {path = "default", mode = "file", target = "$HOME"},
+  {path = "zen",     mode = "file", target = "$HOME"},
+]
 
 [packages.wofi]
 description = "Wofi application launcher configuration"
