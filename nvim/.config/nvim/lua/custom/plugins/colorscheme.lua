@@ -19,7 +19,7 @@ local colorscheme_filters = {
 }
 
 -- active colorscheme
-local active_colorscheme = 'carbonfox'
+local active_colorscheme = 'terafox'
 
 -------------------------------------------------------
 ------- PLUGIN AND TELESCOPE DEFINITION FOLLOWS -------
